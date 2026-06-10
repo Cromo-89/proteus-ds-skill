@@ -1,0 +1,51 @@
+{
+  "$description": "Proteus semantic tokens — LIGHT mode (SECONDARY). Identical token names to semantic.dark; only the referenced primitives change. This is the override mode in Figma's Semantic collection. Tier 2 of 3.",
+  "color": {
+    "$type": "color",
+
+    "background":            { "$value": "{color.neutral.50}" },
+    "background-secondary":  { "$value": "{color.neutral.100}" },
+    "background-tertiary":   { "$value": "{color.neutral.200}" },
+    "background-inverse":    { "$value": "{color.neutral.950}" },
+    "surface-elevated":      { "$value": "{color.neutral.50}" },
+    "card":                  { "$value": "{color.neutral.50}" },
+    "card-foreground":       { "$value": "{color.neutral.950}" },
+    "popover":               { "$value": "{color.neutral.50}" },
+    "popover-foreground":    { "$value": "{color.neutral.950}" },
+
+    "foreground":            { "$value": "{color.neutral.950}" },
+    "foreground-muted":      { "$value": "{color.neutral.500}" },
+    "foreground-subtle":     { "$value": "{color.neutral.400}" },
+    "foreground-inverse":    { "$value": "{color.neutral.50}" },
+
+    "primary":               { "$value": "{color.brand.800}", "$description": "Deeper indigo on light backgrounds; white foreground." },
+    "primary-foreground":    { "$value": "{color.neutral.50}" },
+    "primary-hover":         { "$value": "{color.brand.900}" },
+    "primary-pressed":       { "$value": "{color.brand.950}" },
+    "secondary":             { "$value": "{color.neutral.100}" },
+    "secondary-foreground":  { "$value": "{color.neutral.900}" },
+    "muted":                 { "$value": "{color.neutral.100}" },
+    "muted-foreground":      { "$value": "{color.neutral.500}" },
+    "accent":                { "$value": "{color.neutral.100}" },
+    "accent-foreground":     { "$value": "{color.neutral.900}" },
+
+    "border":                { "$value": "{color.neutral.200}" },
+    "border-heavy":          { "$value": "{color.neutral.300}" },
+    "input":                 { "$value": "{color.neutral.200}" },
+    "ring":                  { "$value": "{color.brand.700}" },
+
+    "success-fg":            { "$value": "{color.green.600}" },
+    "success-bg":            { "$value": "{color.green.600}" },
+    "success-wash":          { "$value": "{color.green.50}" },
+    "warning-fg":            { "$value": "{color.amber.700}" },
+    "warning-bg":            { "$value": "{color.amber.500}" },
+    "warning-wash":          { "$value": "{color.amber.50}" },
+    "destructive-fg":        { "$value": "{color.red.600}" },
+    "destructive-bg":        { "$value": "{color.red.600}" },
+    "destructive-wash":      { "$value": "{color.red.50}" },
+    "destructive-foreground":{ "$value": "{color.neutral.50}" },
+    "info-fg":               { "$value": "{color.blue.600}" },
+    "info-bg":               { "$value": "{color.blue.600}" },
+    "info-wash":             { "$value": "{color.blue.50}" }
+  }
+}

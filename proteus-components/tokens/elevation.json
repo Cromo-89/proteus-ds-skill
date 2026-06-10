@@ -1,0 +1,11 @@
+{
+  "$description": "Proteus elevation — shadow tokens. Dark-first: in dark mode elevation reads mostly through surface lightness (background -> surface-elevated) plus a hairline border; the shadow is a subtle reinforcement. Values are tuned for the matte dark base; a light theme can deepen them.",
+  "elevation": {
+    "$type": "shadow",
+    "none": { "$value": { "color": "oklch(0 0 0 / 0)",    "offsetX": { "value": 0, "unit": "px" }, "offsetY": { "value": 0,  "unit": "px" }, "blur": { "value": 0,  "unit": "px" }, "spread": { "value": 0, "unit": "px" } } },
+    "sm":   { "$value": { "color": "oklch(0 0 0 / 0.30)", "offsetX": { "value": 0, "unit": "px" }, "offsetY": { "value": 1,  "unit": "px" }, "blur": { "value": 2,  "unit": "px" }, "spread": { "value": 0, "unit": "px" } } },
+    "md":   { "$value": { "color": "oklch(0 0 0 / 0.35)", "offsetX": { "value": 0, "unit": "px" }, "offsetY": { "value": 3,  "unit": "px" }, "blur": { "value": 8,  "unit": "px" }, "spread": { "value": 0, "unit": "px" } } },
+    "lg":   { "$value": { "color": "oklch(0 0 0 / 0.40)", "offsetX": { "value": 0, "unit": "px" }, "offsetY": { "value": 8,  "unit": "px" }, "blur": { "value": 24, "unit": "px" }, "spread": { "value": 0, "unit": "px" } } },
+    "xl":   { "$value": { "color": "oklch(0 0 0 / 0.45)", "offsetX": { "value": 0, "unit": "px" }, "offsetY": { "value": 16, "unit": "px" }, "blur": { "value": 48, "unit": "px" }, "spread": { "value": 0, "unit": "px" } } }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "$description": "Proteus borders & focus ring — stroke widths (mode-agnostic). Border COLORS live in the semantic tokens (border, border-heavy, input, ring); this file is widths only.",
+  "borderWidth": {
+    "$type": "dimension",
+    "none": { "$value": { "value": 0, "unit": "px" } },
+    "thin": { "$value": { "value": 1, "unit": "px" }, "$description": "Default hairline for dividers, cards, inputs." },
+    "thick": { "$value": { "value": 2, "unit": "px" }, "$description": "Emphasis and focus indication." }
+  },
+  "focusRing": {
+    "$type": "dimension",
+    "width":  { "$value": { "value": 2, "unit": "px" }, "$description": "Focus ring uses the semantic `ring` color (brand) at this width." },
+    "offset": { "$value": { "value": 2, "unit": "px" }, "$description": "Gap between the element and its ring so it reads clearly on the dark base." }
+  }
+}

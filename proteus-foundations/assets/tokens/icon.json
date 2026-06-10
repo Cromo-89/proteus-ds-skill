@@ -1,0 +1,19 @@
+{
+  "$description": "Proteus iconography — Material Symbols Rounded (Google, Apache-2.0 variable font; axes FILL, wght, GRAD, opsz). Web: <span class=\"material-symbols-rounded\">name</span> via Google Fonts or the `material-symbols` npm package. Figma: Material Symbols plugin. Sizes and axis defaults below; components pick a size token, never a literal icon px.",
+  "icon": {
+    "size": {
+      "$type": "dimension",
+      "sm":   { "$value": { "value": 16, "unit": "px" }, "$description": "Inline with sm/label text." },
+      "md":   { "$value": { "value": 20, "unit": "px" } },
+      "base": { "$value": { "value": 24, "unit": "px" }, "$description": "Default UI icon size." },
+      "lg":   { "$value": { "value": 32, "unit": "px" } },
+      "xl":   { "$value": { "value": 40, "unit": "px" } }
+    },
+    "axis": {
+      "weight":      { "$type": "number", "$value": 400, "$description": "wght 100–700. Min 200 at 24px; never the lightest at standard size." },
+      "fill":        { "$type": "number", "$value": 0,   "$description": "FILL 0 = default (outlined-rounded), 1 = active/selected state." },
+      "grade":       { "$type": "number", "$value": -25, "$description": "GRAD: -25 for light icons on dark (Proteus default, dark-first). Use 0 for dark-on-light." },
+      "opticalSize": { "$type": "number", "$value": 24,  "$description": "opsz 20–48 — set to the icon's rendered px so the stroke stays optically correct (clamp 16px sizes to opsz 20)." }
+    }
+  }
+}

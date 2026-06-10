@@ -1,0 +1,141 @@
+{
+  "$description": "Proteus type styles \u2014 Tier 3 composite styles over the font primitives (Inter sans, JetBrains Mono). Each becomes a Figma text style; components pick a style, never raw size/weight.",
+  "text": {
+    "display": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontSize": "{font.size.4xl}",
+        "fontWeight": "{font.weight.bold}",
+        "lineHeight": "{font.lineHeight.tight}",
+        "letterSpacing": "{font.letterSpacing.tight}"
+      }
+    },
+    "heading": {
+      "xl": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font.family.sans}",
+          "fontSize": "{font.size.3xl}",
+          "fontWeight": "{font.weight.semibold}",
+          "lineHeight": "{font.lineHeight.tight}",
+          "letterSpacing": "{font.letterSpacing.tight}"
+        }
+      },
+      "lg": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font.family.sans}",
+          "fontSize": "{font.size.2xl}",
+          "fontWeight": "{font.weight.semibold}",
+          "lineHeight": "{font.lineHeight.snug}",
+          "letterSpacing": "{font.letterSpacing.tight}"
+        }
+      },
+      "md": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font.family.sans}",
+          "fontSize": "{font.size.xl}",
+          "fontWeight": "{font.weight.semibold}",
+          "lineHeight": "{font.lineHeight.snug}",
+          "letterSpacing": "{font.letterSpacing.normal}"
+        }
+      },
+      "sm": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font.family.sans}",
+          "fontSize": "{font.size.lg}",
+          "fontWeight": "{font.weight.semibold}",
+          "lineHeight": "{font.lineHeight.snug}",
+          "letterSpacing": "{font.letterSpacing.normal}"
+        }
+      }
+    },
+    "body": {
+      "lg": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font.family.sans}",
+          "fontSize": "{font.size.lg}",
+          "fontWeight": "{font.weight.regular}",
+          "lineHeight": "{font.lineHeight.relaxed}",
+          "letterSpacing": "{font.letterSpacing.normal}"
+        }
+      },
+      "md": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font.family.sans}",
+          "fontSize": "{font.size.base}",
+          "fontWeight": "{font.weight.regular}",
+          "lineHeight": "{font.lineHeight.normal}",
+          "letterSpacing": "{font.letterSpacing.normal}"
+        }
+      },
+      "sm": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font.family.sans}",
+          "fontSize": "{font.size.sm}",
+          "fontWeight": "{font.weight.regular}",
+          "lineHeight": "{font.lineHeight.normal}",
+          "letterSpacing": "{font.letterSpacing.normal}"
+        }
+      }
+    },
+    "label": {
+      "lg": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font.family.sans}",
+          "fontSize": "{font.size.base}",
+          "fontWeight": "{font.weight.medium}",
+          "lineHeight": "{font.lineHeight.snug}",
+          "letterSpacing": "{font.letterSpacing.normal}"
+        }
+      },
+      "md": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font.family.sans}",
+          "fontSize": "{font.size.sm}",
+          "fontWeight": "{font.weight.medium}",
+          "lineHeight": "{font.lineHeight.snug}",
+          "letterSpacing": "{font.letterSpacing.normal}"
+        }
+      },
+      "sm": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font.family.sans}",
+          "fontSize": "{font.size.xs}",
+          "fontWeight": "{font.weight.medium}",
+          "lineHeight": "{font.lineHeight.snug}",
+          "letterSpacing": "{font.letterSpacing.wide}"
+        }
+      }
+    },
+    "caption": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontSize": "{font.size.xs}",
+        "fontWeight": "{font.weight.regular}",
+        "lineHeight": "{font.lineHeight.normal}",
+        "letterSpacing": "{font.letterSpacing.normal}"
+      }
+    },
+    "code": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.mono}",
+        "fontSize": "{font.size.sm}",
+        "fontWeight": "{font.weight.regular}",
+        "lineHeight": "{font.lineHeight.normal}",
+        "letterSpacing": "{font.letterSpacing.normal}"
+      }
+    }
+  }
+}

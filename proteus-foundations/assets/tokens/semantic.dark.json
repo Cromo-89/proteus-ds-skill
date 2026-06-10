@@ -1,0 +1,51 @@
+{
+  "$description": "Proteus semantic tokens — DARK mode (PRIMARY). This is the base/first mode in Figma's Semantic collection. Matte-dark: soft charcoal surfaces, off-white text. Every value aliases a primitive. Tier 2 of 3.",
+  "color": {
+    "$type": "color",
+
+    "background":            { "$value": "{color.neutral.950}", "$description": "Page base — matte deep charcoal, not pure black." },
+    "background-secondary":  { "$value": "{color.neutral.900}" },
+    "background-tertiary":   { "$value": "{color.neutral.800}" },
+    "background-inverse":    { "$value": "{color.neutral.50}" },
+    "surface-elevated":      { "$value": "{color.neutral.900}", "$description": "Cards/sheets floating above the base." },
+    "card":                  { "$value": "{color.neutral.900}" },
+    "card-foreground":       { "$value": "{color.neutral.50}" },
+    "popover":               { "$value": "{color.neutral.800}" },
+    "popover-foreground":    { "$value": "{color.neutral.50}" },
+
+    "foreground":            { "$value": "{color.neutral.50}", "$description": "Default text — off-white." },
+    "foreground-muted":      { "$value": "{color.neutral.400}" },
+    "foreground-subtle":     { "$value": "{color.neutral.500}" },
+    "foreground-inverse":    { "$value": "{color.neutral.950}" },
+
+    "primary":               { "$value": "{color.brand.700}", "$description": "= #5649B7. Indigo is dark enough for white foreground." },
+    "primary-foreground":    { "$value": "{color.neutral.50}" },
+    "primary-hover":         { "$value": "{color.brand.600}" },
+    "primary-pressed":       { "$value": "{color.brand.800}" },
+    "secondary":             { "$value": "{color.neutral.800}" },
+    "secondary-foreground":  { "$value": "{color.neutral.50}" },
+    "muted":                 { "$value": "{color.neutral.900}" },
+    "muted-foreground":      { "$value": "{color.neutral.400}" },
+    "accent":                { "$value": "{color.neutral.800}" },
+    "accent-foreground":     { "$value": "{color.neutral.50}" },
+
+    "border":                { "$value": "{color.neutral.800}" },
+    "border-heavy":          { "$value": "{color.neutral.700}" },
+    "input":                 { "$value": "{color.neutral.800}" },
+    "ring":                  { "$value": "{color.brand.600}" },
+
+    "success-fg":            { "$value": "{color.green.400}" },
+    "success-bg":            { "$value": "{color.green.500}" },
+    "success-wash":          { "$value": "{color.green.950}" },
+    "warning-fg":            { "$value": "{color.amber.400}" },
+    "warning-bg":            { "$value": "{color.amber.500}" },
+    "warning-wash":          { "$value": "{color.amber.950}" },
+    "destructive-fg":        { "$value": "{color.red.400}" },
+    "destructive-bg":        { "$value": "{color.red.500}" },
+    "destructive-wash":      { "$value": "{color.red.950}" },
+    "destructive-foreground":{ "$value": "{color.neutral.50}" },
+    "info-fg":               { "$value": "{color.blue.400}" },
+    "info-bg":               { "$value": "{color.blue.500}" },
+    "info-wash":             { "$value": "{color.blue.950}" }
+  }
+}

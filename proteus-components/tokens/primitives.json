@@ -1,0 +1,458 @@
+{
+  "$description": "Proteus primitives \u2014 raw, mode-agnostic atoms (OKLCH). Tier 1 of 3. Brand built from reference #5649B7 (indigo, hue 284); brand.700 reproduces it. Status ramps are vivid/clear, aligned to the reference systems' saturated status style.",
+  "color": {
+    "$type": "color",
+    "neutral": {
+      "$description": "Matte-dark neutral ramp: pure charcoals, off-white at the top.",
+      "50": {
+        "$value": "oklch(0.97 0 0)"
+      },
+      "100": {
+        "$value": "oklch(0.94 0 0)"
+      },
+      "200": {
+        "$value": "oklch(0.89 0 0)"
+      },
+      "300": {
+        "$value": "oklch(0.83 0 0)"
+      },
+      "400": {
+        "$value": "oklch(0.71 0 0)"
+      },
+      "500": {
+        "$value": "oklch(0.58 0 0)"
+      },
+      "600": {
+        "$value": "oklch(0.48 0 0)"
+      },
+      "700": {
+        "$value": "oklch(0.40 0 0)"
+      },
+      "800": {
+        "$value": "oklch(0.32 0 0)"
+      },
+      "900": {
+        "$value": "oklch(0.24 0 0)"
+      },
+      "950": {
+        "$value": "oklch(0.16 0 0)"
+      }
+    },
+    "brand": {
+      "$description": "Indigo from #5649B7. brand.700 ~ the reference.",
+      "50": {
+        "$value": "oklch(0.970 0.037 284)"
+      },
+      "100": {
+        "$value": "oklch(0.940 0.066 284)"
+      },
+      "200": {
+        "$value": "oklch(0.890 0.102 284)"
+      },
+      "300": {
+        "$value": "oklch(0.820 0.148 284)"
+      },
+      "400": {
+        "$value": "oklch(0.740 0.189 284)"
+      },
+      "500": {
+        "$value": "oklch(0.660 0.205 284)"
+      },
+      "600": {
+        "$value": "oklch(0.570 0.197 284)"
+      },
+      "700": {
+        "$value": "oklch(0.480 0.174 284)"
+      },
+      "800": {
+        "$value": "oklch(0.390 0.139 284)"
+      },
+      "900": {
+        "$value": "oklch(0.300 0.102 284)"
+      },
+      "950": {
+        "$value": "oklch(0.220 0.070 284)"
+      }
+    },
+    "red": {
+      "$description": "Error / danger.",
+      "50": {
+        "$value": "oklch(0.970 0.036 27)"
+      },
+      "100": {
+        "$value": "oklch(0.940 0.064 27)"
+      },
+      "200": {
+        "$value": "oklch(0.890 0.100 27)"
+      },
+      "300": {
+        "$value": "oklch(0.820 0.144 27)"
+      },
+      "400": {
+        "$value": "oklch(0.740 0.184 27)"
+      },
+      "500": {
+        "$value": "oklch(0.660 0.200 27)"
+      },
+      "600": {
+        "$value": "oklch(0.570 0.192 27)"
+      },
+      "700": {
+        "$value": "oklch(0.480 0.170 27)"
+      },
+      "800": {
+        "$value": "oklch(0.390 0.136 27)"
+      },
+      "900": {
+        "$value": "oklch(0.300 0.100 27)"
+      },
+      "950": {
+        "$value": "oklch(0.220 0.068 27)"
+      }
+    },
+    "green": {
+      "$description": "Success.",
+      "50": {
+        "$value": "oklch(0.970 0.029 150)"
+      },
+      "100": {
+        "$value": "oklch(0.940 0.051 150)"
+      },
+      "200": {
+        "$value": "oklch(0.890 0.080 150)"
+      },
+      "300": {
+        "$value": "oklch(0.820 0.115 150)"
+      },
+      "400": {
+        "$value": "oklch(0.740 0.147 150)"
+      },
+      "500": {
+        "$value": "oklch(0.660 0.160 150)"
+      },
+      "600": {
+        "$value": "oklch(0.570 0.154 150)"
+      },
+      "700": {
+        "$value": "oklch(0.480 0.136 150)"
+      },
+      "800": {
+        "$value": "oklch(0.390 0.109 150)"
+      },
+      "900": {
+        "$value": "oklch(0.300 0.080 150)"
+      },
+      "950": {
+        "$value": "oklch(0.220 0.054 150)"
+      }
+    },
+    "amber": {
+      "$description": "Warning (orange-amber).",
+      "50": {
+        "$value": "oklch(0.970 0.030 70)"
+      },
+      "100": {
+        "$value": "oklch(0.940 0.053 70)"
+      },
+      "200": {
+        "$value": "oklch(0.890 0.083 70)"
+      },
+      "300": {
+        "$value": "oklch(0.820 0.119 70)"
+      },
+      "400": {
+        "$value": "oklch(0.740 0.152 70)"
+      },
+      "500": {
+        "$value": "oklch(0.660 0.165 70)"
+      },
+      "600": {
+        "$value": "oklch(0.570 0.158 70)"
+      },
+      "700": {
+        "$value": "oklch(0.480 0.140 70)"
+      },
+      "800": {
+        "$value": "oklch(0.390 0.112 70)"
+      },
+      "900": {
+        "$value": "oklch(0.300 0.083 70)"
+      },
+      "950": {
+        "$value": "oklch(0.220 0.056 70)"
+      }
+    },
+    "blue": {
+      "$description": "Info.",
+      "50": {
+        "$value": "oklch(0.970 0.030 245)"
+      },
+      "100": {
+        "$value": "oklch(0.940 0.053 245)"
+      },
+      "200": {
+        "$value": "oklch(0.890 0.083 245)"
+      },
+      "300": {
+        "$value": "oklch(0.820 0.119 245)"
+      },
+      "400": {
+        "$value": "oklch(0.740 0.152 245)"
+      },
+      "500": {
+        "$value": "oklch(0.660 0.165 245)"
+      },
+      "600": {
+        "$value": "oklch(0.570 0.158 245)"
+      },
+      "700": {
+        "$value": "oklch(0.480 0.140 245)"
+      },
+      "800": {
+        "$value": "oklch(0.390 0.112 245)"
+      },
+      "900": {
+        "$value": "oklch(0.300 0.083 245)"
+      },
+      "950": {
+        "$value": "oklch(0.220 0.056 245)"
+      }
+    }
+  },
+  "space": {
+    "$type": "dimension",
+    "0": {
+      "$value": {
+        "value": 0,
+        "unit": "px"
+      }
+    },
+    "1": {
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "2": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "3": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "4": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "5": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "6": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "8": {
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      }
+    },
+    "10": {
+      "$value": {
+        "value": 40,
+        "unit": "px"
+      }
+    },
+    "12": {
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      }
+    },
+    "16": {
+      "$value": {
+        "value": 64,
+        "unit": "px"
+      }
+    },
+    "20": {
+      "$value": {
+        "value": 80,
+        "unit": "px"
+      }
+    }
+  },
+  "radius": {
+    "$type": "dimension",
+    "sm": {
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      }
+    },
+    "md": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "base": {
+      "$value": {
+        "value": 10,
+        "unit": "px"
+      }
+    },
+    "lg": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "xl": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "full": {
+      "$value": {
+        "value": 9999,
+        "unit": "px"
+      }
+    }
+  },
+  "font": {
+    "family": {
+      "sans": {
+        "$type": "fontFamily",
+        "$value": [
+          "Inter",
+          "system-ui",
+          "sans-serif"
+        ]
+      },
+      "mono": {
+        "$type": "fontFamily",
+        "$value": [
+          "JetBrains Mono",
+          "ui-monospace",
+          "monospace"
+        ]
+      }
+    },
+    "size": {
+      "$type": "dimension",
+      "xs": {
+        "$value": {
+          "value": 12,
+          "unit": "px"
+        }
+      },
+      "sm": {
+        "$value": {
+          "value": 14,
+          "unit": "px"
+        }
+      },
+      "base": {
+        "$value": {
+          "value": 16,
+          "unit": "px"
+        }
+      },
+      "lg": {
+        "$value": {
+          "value": 18,
+          "unit": "px"
+        }
+      },
+      "xl": {
+        "$value": {
+          "value": 20,
+          "unit": "px"
+        }
+      },
+      "2xl": {
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        }
+      },
+      "3xl": {
+        "$value": {
+          "value": 30,
+          "unit": "px"
+        }
+      },
+      "4xl": {
+        "$value": {
+          "value": 36,
+          "unit": "px"
+        }
+      }
+    },
+    "weight": {
+      "$type": "fontWeight",
+      "regular": {
+        "$value": 400
+      },
+      "medium": {
+        "$value": 500
+      },
+      "semibold": {
+        "$value": 600
+      },
+      "bold": {
+        "$value": 700
+      }
+    },
+    "lineHeight": {
+      "$type": "number",
+      "tight": {
+        "$value": 1.2
+      },
+      "snug": {
+        "$value": 1.35
+      },
+      "normal": {
+        "$value": 1.5
+      },
+      "relaxed": {
+        "$value": 1.625
+      }
+    },
+    "letterSpacing": {
+      "$type": "dimension",
+      "tight": {
+        "$value": {
+          "value": -0.4,
+          "unit": "px"
+        }
+      },
+      "normal": {
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        }
+      },
+      "wide": {
+        "$value": {
+          "value": 0.4,
+          "unit": "px"
+        }
+      }
+    }
+  }
+}

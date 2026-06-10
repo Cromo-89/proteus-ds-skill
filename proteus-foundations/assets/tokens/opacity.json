@@ -1,0 +1,10 @@
+{
+  "$description": "Proteus opacity — alpha tokens for states and layers. Mode-agnostic, unitless (0–1).",
+  "opacity": {
+    "$type": "number",
+    "disabled": { "$value": 0.4,  "$description": "Disabled controls — applied to the element, not its individual colors." },
+    "hover":    { "$value": 0.08, "$description": "Subtle hover state layer over a surface." },
+    "pressed":  { "$value": 0.12, "$description": "Pressed/active state layer." },
+    "scrim":    { "$value": 0.6,  "$description": "Backdrop behind modals/overlays (over a near-black scrim color)." }
+  }
+}
