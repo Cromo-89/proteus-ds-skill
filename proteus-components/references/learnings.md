@@ -373,3 +373,32 @@ one's polish — clone the whole frame cross-page in one hop via `clone()` +
    probe instances in the SAME script that created them** — don't rely on a
    later cleanup pass; a `return` that "looks done" can still leave
    canvas litter that confuses the next person navigating the file.
+
+## Auditoría de extensiones — v0.11.0 (2026-06-11)
+
+Pasada combinada sobre las 35 páginas de extensión (lectura dirigida vía
+`use_figma` con `page.loadAsync()` — sin `setCurrentPageAsync`, lo que permite
+auditar 12 páginas por script en vez de una):
+
+- **52 frames genéricos `Frame` renombrados** en 18 páginas según el template
+  (`header` / `variants-section[-N]` / `demo-section[-N]`), clasificados por
+  heurística: primer hijo del wrapper = header; label "Variants…" = variants;
+  label "Demo…" = demo; con ComponentSet adentro = variants.
+- **32 descripciones de header reescritas** al patrón obligatorio "Úsalo [caso
+  de uso]. [Diferenciador/estructura]" — solo Password Input, Phone Input y
+  Notification Center ya cumplían. Verificado con screenshot (Date Picker):
+  el texto refluye bien, layout intacto.
+- **Anchos de wrapper medidos** (pendiente de normalizar): 1200 (mayoría),
+  1424 (Password/Phone), y outliers 641 (Notification Center), 776 (Divider),
+  1099 (Chat), 1212 (Timeline), 1216 (Navbar), 1392 (Feature Card), 1400 (Form
+  Field), 1480 (Empty State), 1608 (Textarea), 1624 (File Upload), 1648
+  (Command Palette).
+- La tabla operativa resultante (set IDs, ejes, properties de los 35) vive en
+  SKILL.md → "Extensiones — ComponentSets, ejes y properties".
+
+**Técnica nueva validada — `page.loadAsync()` para trabajo multi-página:**
+carga el contenido de una página SIN cambiarla a current. Permite leer Y
+MUTAR (renames, `characters` con fuente cargada) decenas de páginas en un
+solo script, evitando la regla "un `setCurrentPageAsync` por invocación".
+Validado en 3 scripts de lectura (35 páginas), 2 de renombrado (18 páginas)
+y 4 de reescritura de texto (32 páginas) — 0 errores.

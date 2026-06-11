@@ -1,6 +1,6 @@
 ---
 name: proteus-components
-version: 0.10.0
+version: 0.11.0
 description: >-
   Build component sets for ProteusDS in Figma on top of the foundations
   tokens — variant matrices (Style × Size), component properties (TEXT,
@@ -33,7 +33,7 @@ as shown (preserve all spacing and box-drawing characters):
 │              C O M P O N E N T S                      │
 │                                                       │
 │   Design System for ProteusDS  ·  Stage 2/3           │
-│   Variant Sets · Properties · Pages         v 0.10.0  │
+│   Variant Sets · Properties · Pages         v 0.11.0  │
 │                                                       │
 ╰───────────────────────────────────────────────────────╯
 ```
@@ -79,6 +79,50 @@ Estructura de páginas en Figma (`Ohc3OVwwd3MwI4SvIdk3EY`). Cada categoría tien
 Otras páginas clave: Cover `0:1` · divisor `C O M P O N E N T S` `53:756` (Context card `259:2`) · Icons `207:2` · separador `↓ T E M P L A T E S` `1086:2`.
 
 **Truco para listar todas las páginas del archivo**: `get_metadata` sin `nodeId` puede devolver solo las páginas ya cargadas por el cliente (lazy loading). Pasar un `nodeId` inválido (e.g. `0:0`) fuerza un error cuyo mensaje incluye la lista COMPLETA de páginas con sus IDs.
+
+### Extensiones — ComponentSets, ejes y properties (auditado 2026-06-11)
+
+Los 19 formales de Stage 2 están detallados en `references/learnings.md`. Esta tabla
+cubre los componentes construidos después (más Tabs y Divider, que son rebuilds).
+Properties listadas sin tipo = TEXT.
+
+| Componente | Set / Master | Ejes (variantes) | Properties |
+|---|---|---|---|
+| Date Picker | `Cell` `718:15` · `Calendar` `854:216` · `Date Picker` `857:191` | Cell: State ×6 · Calendar: View Month/Year · Picker: State Closed/Open | — |
+| File Upload | `706:32` | State Default/Hover/Filled | Title · Description · Hint |
+| Form Field | `Item` `947:32` | State Default/Focused/Filled/Error/Disabled | — |
+| Number Input | `711:24` | State Default/Focus/Disabled | Value |
+| OTP Input | `713:47` | State Default/Focus/Filled/Error | — |
+| Password Input | `957:62` | Size ×3 × State ×5 (15 var.) | Placeholder · Helper Text |
+| Phone Input | `958:2` | Size ×3 × State ×5 (15 var.) | Country Code · Placeholder · Helper Text |
+| Search | `712:35` | State Default/Focus/Filled/Disabled | Query · Show Clear (BOOL) |
+| Slider | `705:15` | State Default/Focus/Disabled | Value |
+| Textarea | `668:23` | State ×5 | Placeholder · Helper Text |
+| Breadcrumb | `Item` `696:13` | State Default/Active | Label |
+| Navbar | `714:38` | Type Desktop/Mobile/Mobile Open | — |
+| Pagination | `Item` `695:27` | Type Page/Ellipsis/Previous/Next × State ×3 (8 var.) | Label |
+| Sidebar | `Item` `905:80` · `SubItem` `906:60` · `Sidebar` `909:133` | Item: Type Link/Section/Separator × HasSubItems × State ×4 (10 var.) · SubItem: State ×4 · Sidebar: Expanded/Collapsed | — |
+| Stepper | `Step` `715:17` | State Pending/Active/Completed | Number · Label |
+| Tabs (rebuild) | `Tab / Item` `881:23` | Type Pill/Underline × State ×4 | — |
+| Command Palette | `Result` `724:15` | Type Item/Section × State Default/Hover (3 var.) | — |
+| Context Menu | `Item` `716:42` | Type Default/Danger/Disabled/Separator/Submenu × State ×2 (8 var.) | Label · Shortcut |
+| Notification Center | `Notification / Item` `747:18` | State Unread/Read | — |
+| Toast | `681:53` | Status ×5 | Title · Description |
+| Banner | `704:53` | Status ×5 | Title · Description · Show Description (BOOL) · Show Close (BOOL) |
+| Empty State | master único `697:3` | — | Icon (INSTANCE_SWAP) · Title · Description · Show Action (BOOL) · Action Label |
+| Progress | `934:2` | Size SM/MD/LG × Status ×4 (12 var.) | — |
+| Progress Bar | `936:2` | Size ×3 × Status ×4 (12 var.) | Value |
+| Skeleton | `678:8` | Shape Text/Block/Circle/Rectangle/Button | — |
+| Avatar Group | `1007:47` | Size SM/MD/LG | — |
+| Chat Message | `Chat / Message` `755:20` | Type Received/Sent/System | — |
+| Chip | `710:29` | Type Filter/Action × State ×3 | Label |
+| Divider (rebuild) | `Line` `744:13` | Orientation × Style (4 var.) | — |
+| Feature Card | `Card` `763:43` | Color Purple/Green/Blue/Orange/Red | — |
+| List Item | `707:35` | State ×4 | Title · Subtitle · Show Subtitle (BOOL) · Show Chevron (BOOL) |
+| Rating | `Star` `729:9` | State Full/Half/Empty | — |
+| Stat Card | `708:45` | Trend Neutral/Positive/Negative | Metric · Value · Period |
+| Timeline | `Item` `727:35` | Type Pending/Active/Completed/Error | — |
+| Toggle Group | `Item` `896:76` | Content Text/Icon/Both × State ×4 (12 var.) | — |
 
 ## Foundations pages — extras (beyond tokens)
 
@@ -334,8 +378,12 @@ wrapper  FRAME  VERTICAL  w=1424 FIXED  h=AUTO
 
 **Notas de construcción:**
 
-- El `wrapper` mide **1424px** de ancho (no 1200 — ese era el valor original de Button,
-  corregido a 1424 a partir de Input). Usar siempre 1424.
+- El `wrapper` estándar para páginas NUEVAS mide **1424px** de ancho. Realidad del
+  archivo (auditada 2026-06-11): los anchos varían entre 641 y 1648px — la mayoría
+  usa 1200, Password/Phone Input usan 1424, y hay outliers ajustados al contenido
+  (Notification Center 641, Divider 776, File Upload 1624, Command Palette 1648).
+  La normalización está pendiente; para una página nueva, usar 1424 salvo que el
+  contenido pida otra cosa.
 - La descripción del `header` debe seguir el patrón documentado en
   "Language conventions → Header description": caso de uso primero,
   diferenciador del Input base después.
