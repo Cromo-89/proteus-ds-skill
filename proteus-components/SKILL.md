@@ -1,6 +1,6 @@
 ---
 name: proteus-components
-version: 0.11.0
+version: 0.11.1
 description: >-
   Build component sets for ProteusDS in Figma on top of the foundations
   tokens — variant matrices (Style × Size), component properties (TEXT,
@@ -33,7 +33,7 @@ as shown (preserve all spacing and box-drawing characters):
 │              C O M P O N E N T S                      │
 │                                                       │
 │   Design System for ProteusDS  ·  Stage 2/3           │
-│   Variant Sets · Properties · Pages         v 0.11.0  │
+│   Variant Sets · Properties · Pages         v 0.11.1  │
 │                                                       │
 ╰───────────────────────────────────────────────────────╯
 ```
@@ -378,12 +378,22 @@ wrapper  FRAME  VERTICAL  w=1424 FIXED  h=AUTO
 
 **Notas de construcción:**
 
-- El `wrapper` estándar para páginas NUEVAS mide **1424px** de ancho. Realidad del
-  archivo (auditada 2026-06-11): los anchos varían entre 641 y 1648px — la mayoría
-  usa 1200, Password/Phone Input usan 1424, y hay outliers ajustados al contenido
-  (Notification Center 641, Divider 776, File Upload 1624, Command Palette 1648).
-  La normalización está pendiente; para una página nueva, usar 1424 salvo que el
-  contenido pida otra cosa.
+- El `wrapper` estándar mide **1424px** de ancho. Normalizado el 2026-06-11: los
+  31 wrappers que estaban en la "clase 1200" (1200–1400px) se redimensionaron a
+  1424 con la receta de orden correcta (`counterAxisSizingMode='FIXED'` →
+  `resize(1424, h)` → `primaryAxisSizingMode='AUTO'`). Los wrappers ajustados al
+  contenido se dejaron intactos a propósito (Button 595, Alert 600, Label 633,
+  Badge 656, Radio 689, Avatar 697, Checkbox 700, Switch 736, Tooltip 945,
+  Notification Center 641, Divider 776, Chat 1099, Feature Card 1392, Empty
+  State 1480, Textarea 1608, File Upload 1624, Command Palette 1648, Dialog 1688).
+  Para una página nueva: 1424, salvo que el contenido pida otra cosa.
+- **Gotcha del relayout post-resize**: al ensanchar un wrapper, cualquier frame
+  interno en estado degenerado "hijos FILL dentro de padre HUG" colapsa a su
+  ancho mínimo (~40px) y el texto envuelto dispara la altura (pasó en Banner:
+  demo-col a 40px × 7110px de alto; y en List Item: list a 48px). El fix es
+  poner `layoutSizingHorizontal='FILL'` en el frame colapsado, no tocar a los
+  hijos. Detector validado: buscar `FRAME`s con `width < 60` que tengan hijos
+  con `layoutSizingHorizontal === 'FILL'`.
 - La descripción del `header` debe seguir el patrón documentado en
   "Language conventions → Header description": caso de uso primero,
   diferenciador del Input base después.

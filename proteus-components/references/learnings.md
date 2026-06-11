@@ -402,3 +402,29 @@ MUTAR (renames, `characters` con fuente cargada) decenas de páginas en un
 solo script, evitando la regla "un `setCurrentPageAsync` por invocación".
 Validado en 3 scripts de lectura (35 páginas), 2 de renombrado (18 páginas)
 y 4 de reescritura de texto (32 páginas) — 0 errores.
+
+## Normalización de anchos de wrapper — v0.11.1 (2026-06-11)
+
+31 wrappers en "clase 1200" (1200/1212/1216/1400px) redimensionados a 1424px
+(decisión del usuario: normalizar solo esa clase, dejar los content-fitted).
+Formales: Card (1216), Accordion, Popover, Dropdown Menu, Select, Table (1200).
+Extensiones: los 25 restantes incl. Navbar (1216), Timeline (1212), Form Field (1400).
+
+**Bug expuesto (preexistente) — frames colapsados por FILL-dentro-de-HUG:**
+en Banner, `demo-col` (hijo de demo-section) era HUG de ancho con 5 instancias
+FILL adentro → colapsado a 40px, con cada Banner envolviendo el texto a ~1800px
+de alto (página de 7919px). En List Item, el frame `list` igual (48px, items de
+600px de alto). Fix: `layoutSizingHorizontal='FILL'` en el frame colapsado →
+Banner 74px de alto, items 344×66, wrappers a 1189/1163px. Un escaneo del mismo
+patrón en las 52 páginas (FRAME width<60 con hijos FILL + TEXT width<40 con >8
+chars) salió LIMPIO — eran los únicos dos casos.
+
+**Screenshots del MCP pueden quedar desfasados tras relayouts masivos:** tras el
+fix, `get_screenshot` siguió mostrando los íconos de Banner cortados en el borde
+izquierdo (incluso con `contentsOnly:true` y tras nudge de visibilidad), pero
+`absoluteRenderBounds` — calculado por el renderer real de la app — los reporta
+en posición correcta (x=188, dentro del banner), y un banner de los 5 sí
+renderizaba bien (staleness parcial por nodo). Regla: si el screenshot contradice
+a `absoluteRenderBounds`, confiar en `absoluteRenderBounds` y re-capturar después
+de un rato — el servicio de screenshots renderiza desde un estado sincronizado
+que puede ir detrás del archivo vivo.
