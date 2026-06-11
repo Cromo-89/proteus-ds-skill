@@ -1,6 +1,6 @@
 ---
 name: proteus-component
-version: 0.8.0
+version: 0.9.1
 description: >-
   Build component sets for ProteusDS in Figma on top of the foundations
   tokens — variant matrices (Style × Size), component properties (TEXT,
@@ -33,7 +33,7 @@ as shown (preserve all spacing and box-drawing characters):
 │              C O M P O N E N T S                     │
 │                                                       │
 │   Design System for ProteusDS  ·  Stage 2/3           │
-│   Variant Sets · Properties · Pages          v 0.8.0  │
+│   Variant Sets · Properties · Pages          v 0.9.1  │
 │                                                       │
 ╰───────────────────────────────────────────────────────╯
 ```
@@ -62,6 +62,95 @@ Figma file: **`Ohc3OVwwd3MwI4SvIdk3EY`** (Proteus DS).
   `semantic.dark.json`, `semantic.light.json`, `typography.json`, `border.json`,
   `opacity.json`, `elevation.json`)
 
+## Component catalog — 52 componentes en 5 categorías
+
+Estructura de páginas en Figma (`Ohc3OVwwd3MwI4SvIdk3EY`). Cada categoría tiene su separador `↓ NOMBRE` en el panel de páginas. **Los IDs de cada componente son IDs de PÁGINA (canvas)**, verificados contra el archivo el 2026-06-11 — usarlos con `figma.getNodeByIdAsync(id)` o `setCurrentPageAsync` sin redescubrir.
+
+| Categoría | # | Componentes (con ID de página) |
+|---|---|---|
+| **📝 Forms** (separador `1072:2`) | 15 | Checkbox `391:2` · Date Picker `718:2` · File Upload `706:2` · Form Field `739:2` · Input `331:2` · Number Input `711:2` · OTP Input `713:2` · Password Input `955:2` · Phone Input `956:2` · Radio `419:2` · Search `712:2` · Select `628:2` · Slider `705:2` · Switch `432:2` · Textarea `668:2` |
+| **🧭 Navigation** (separador `1072:3`) | 6 | Breadcrumb `696:2` · Navbar `714:2` · Pagination `695:2` · Sidebar `736:2` · Stepper `715:2` · Tabs `726:2` |
+| **🪟 Overlays** (separador `1072:4`) | 8 | Command Palette `724:2` · Context Menu `716:2` · Dialog `640:2` · Dropdown Menu `612:2` · Notification Center `747:2` · Popover `597:2` · Toast `681:2` · Tooltip `546:2` |
+| **🔔 Feedback** (separador `1072:5`) | 6 | Alert `496:19` · Banner `704:2` · Empty State `697:2` · Progress `677:2` · Progress Bar `728:2` · Skeleton `678:2` |
+| **🖼️ Display** (separador `1072:6`) | 17 | Accordion `533:2` · Avatar `464:2` · Avatar Group `732:2` · Badge `311:2` · Button `166:2` · Card `444:2` · Chat Message `755:2` · Chip `710:2` · Divider `744:2` · Feature Card `763:2` · Label `265:2` · List Item `707:2` · Rating `729:2` · Stat Card `708:2` · Table `644:2` · Timeline `727:2` · Toggle Group `733:2` |
+
+Otras páginas clave: Cover `0:1` · divisor `C O M P O N E N T S` `53:756` (Context card `259:2`) · Icons `207:2` · separador `↓ T E M P L A T E S` `1086:2`.
+
+**Truco para listar todas las páginas del archivo**: `get_metadata` sin `nodeId` puede devolver solo las páginas ya cargadas por el cliente (lazy loading). Pasar un `nodeId` inválido (e.g. `0:0`) fuerza un error cuyo mensaje incluye la lista COMPLETA de páginas con sus IDs.
+
+## Foundations pages — extras (beyond tokens)
+
+Páginas de referencia visual en Figma que complementan las foundations de tokens:
+
+| Página | ID nodo | Contenido |
+|---|---|---|
+| `Grid & Breakpoints` | `1077:2` | 3 breakpoints (Mobile 375 · Tablet 768 · Desktop 1440) + grids dibujados con rectángulos de columna |
+| `↓ T E M P L A T E S` | `1086:2` | Separador de sección |
+| `Auth` | `1086:3` | Login card centrado — campo email, password, CTA primario, link registro |
+| `Dashboard` | `1086:4` | Sidebar 240px + topbar 56px + 4 stat cards + chart placeholder + actividad reciente |
+| `Settings` | `1086:5` | Sidebar app + nav de ajustes 220px + form card (2 cols) con campos y botón guardar |
+| `Empty · Error` | `1086:6` | Dos pantallas 1440×900: Error 404 (card centrado, botones) · Estado vacío (ilustración, feature list, CTA) |
+| `Dark · Light Mode` | `1091:2` | Comparación side-by-side: paleta de colores, mini shell, botones, formularios, badges y notification card en ambos modos |
+
+**Paleta de colores usada en templates** (hardcoded, dark mode):
+
+```js
+const C = {
+  bg:      { r: 0.055, g: 0.055, b: 0.085 },  // fondo de pantalla
+  card:    { r: 0.10,  g: 0.10,  b: 0.14  },  // tarjetas / paneles
+  sidebar: { r: 0.065, g: 0.065, b: 0.10  },  // sidebar app
+  topbar:  { r: 0.07,  g: 0.07,  b: 0.105 },  // topbar
+  input:   { r: 0.085, g: 0.085, b: 0.13  },  // fondo de inputs
+  primary: { r: 0.34,  g: 0.29,  b: 0.72  },  // acción primaria (Indigo)
+  text:    { r: 0.93,  g: 0.93,  b: 0.96  },  // texto principal
+  muted:   { r: 0.52,  g: 0.52,  b: 0.62  },  // texto secundario
+  border:  { r: 0.18,  g: 0.18,  b: 0.26  },  // bordes y separadores
+  success: { r: 0.20,  g: 0.72,  b: 0.45  },  // éxito
+  warning: { r: 0.95,  g: 0.65,  b: 0.20  },  // advertencia
+  error:   { r: 0.85,  g: 0.28,  b: 0.28  },  // error
+};
+```
+
+**Nota crítica para nuevas páginas**: `figma.createPage()` resuelve variables semánticas en modo Light. Usar colores hardcoded (neutral/900 = `{ r: 0.122, g: 0.122, b: 0.122 }`) y NO llamar `setExplicitVariableModeForCollection` después de fijar fills manuales.
+
+## Version bump — checklist obligatorio
+
+Cuando se sube la versión del skill (e.g. `0.8.0` → `0.9.0`), **todos los archivos
+que referencian la versión deben actualizarse en el mismo commit**. No es válido
+actualizar solo el SKILL.md.
+
+**Archivos a actualizar para proteus-components:**
+
+| Archivo | Qué actualizar | Ejemplo |
+|---|---|---|
+| `proteus-components/SKILL.md` | Frontmatter línea 3: `version: X.X.X` | `version: 0.9.0` |
+| `proteus-components/SKILL.md` | Splash screen: `v X.X.X` al final de la línea de "Pages" | `v 0.9.0` |
+| `README.md` (raíz del repo) | Línea `proteus-components/`: `skill vX.X.X` | `skill v0.9.0` |
+
+**Archivos de recursos — sin versión embebida, pero deben ir en el mismo commit si cambiaron:**
+
+| Archivo/Carpeta | Cuándo incluir en el commit |
+|---|---|
+| `tokens/*.json` | Si se agregaron o modificaron tokens de foundations |
+| `references/token-contract.md` | Si cambió el contrato de tokens o el mapeo shadcn |
+| `icons-svg/` + `icons-svg.json` | Si se agregaron o eliminaron íconos de la librería |
+
+Todos los cambios de una versión van en **un solo commit** — no commits parciales donde el SKILL.md dice v0.9.0 pero los tokens son del v0.8.0.
+
+**Archivos a actualizar para proteus-foundations** (cuando corresponda):
+
+| Archivo | Qué actualizar |
+|---|---|
+| `proteus-foundations/SKILL.md` | Frontmatter línea 3: `version: X.X.X` |
+| `README.md` (raíz del repo) | Línea `proteus-foundations/`: `skill vX.X.X` |
+| `proteus-foundations/references/` | Si cambiaron las referencias de foundations |
+| `proteus-foundations/assets/` | Si se actualizaron assets de foundations |
+
+**Regla de numeración:**
+- Patch (`X.X.0 → X.X.1`): correcciones o mejoras a reglas existentes sin nuevo contenido.
+- Minor (`X.0.0 → X.1.0`): nuevos componentes, secciones de referencia o patrones documentados.
+- Major (`0.X.X → 1.X.X`): cambio de stage o reestructuración completa del skill.
+
 ## Foundations status (read-only reference — do not modify here)
 
 - **`Primitives`** collection (`VariableCollectionId:11:2`, 1 mode) — OKLCH ramps incl.
@@ -81,13 +170,20 @@ Known semantic variable IDs (skip re-discovery):
 
 ## Icon library — vector components on the "Icons" page
 
-A 34-icon vector library exists on its own page (`Icons`, page id `207:2`, wrapper
-`207:3`), built v0.1.0 from **Material Symbols Rounded**
+A **37-icon** vector library exists on its own page (`Icons`, page id `207:2`, wrapper
+`207:3`): 34 built in v0.1.0 from **Material Symbols Rounded**
 (`fonts.gstatic.com/s/i/.../materialsymbolsrounded/<name>/default/24px.svg`,
-`viewBox="0 -960 960 960"`, single-path SVGs).
+`viewBox="0 -960 960 960"`, single-path SVGs), más 3 agregados después: `tune` y
+`done_all` (misma fuente Material) y `google` (G monocromática, fuente **Simple
+Icons** — `viewBox="0 0 24 24"`, único ícono de marca del set).
+
+**Assets locales sincronizados (2026-06-11)**: `icons-svg/` contiene los 37 archivos
+SVG y `icons-svg.json` el mapa `{name: svgString}` con las 37 entradas, regenerado
+desde la carpeta. Si se agrega un ícono a Figma, agregar el `.svg` a la carpeta y
+regenerar el JSON en el mismo commit.
 
 **Shape**: one `COMPONENT` per icon, named `Icon/<name>`, fixed 24×24, `fills = []`
-on the component itself, internal structure `COMPONENT > Frame (FRAME) > vector
+on the component itself, internal structure `COMPONENT > clip (FRAME) > vector
 (VECTOR)`. `figma.createNodeFromSvg(svg)` returns a `FRAME` wrapping a `VECTOR` —
 never a bare `VECTOR` — and that `VECTOR.fills[0]` is bound to `color/foreground`
 (`VariableID:15:12`). This is the **"currentColor" pattern**: default tint is
@@ -124,11 +220,12 @@ download=208:52 upload=208:55 visibility=208:58 lock=208:61 mail=208:64
 calendar_today=208:67 filter_list=208:70 sort=208:73 more_vert=208:76
 expand_more=208:79 chevron_right=208:82 info=208:85 warning=208:88 error=208:91
 check_circle=208:94 help=208:97 logout=208:100 login=208:103 tune=224:4
+done_all=1048:4 google=1102:4
 ```
 
 **`INSTANCE_SWAP` is now unblocked** — Button's `icon` placeholder (a tinted frame,
 flagged in v0.1.0 as "swap to `INSTANCE_SWAP` once an icon library exists") can be
-upgraded to a real `INSTANCE_SWAP` component property defaulting to one of these 34
+upgraded to a real `INSTANCE_SWAP` component property defaulting to one of these 37
 components, `preferredValues` scoped to the set.
 
 **Migrated — ALL FOUR demo spots in Iconography**, replacing every Material Icons
@@ -139,7 +236,9 @@ the instance keeps the exact same semantic tint):
 - `Section/CommonIcons > IconGrid` — 34 cards (the only one done in the first pass)
 - `Section/SizeScale` — "home" at 5 sizes (16/20/24/32/40), all → `color/foreground`
 - `Section/IconColors > ColorGrid` — 7 chips incl. **`tune`** (not in the original 34
-  — fetched from the CDN and added as `Icon/tune` = `224:4`, now **35 icons** total),
+  — fetched from the CDN and added as `Icon/tune` = `224:4`, now **35 icons** at that point;
+  `done_all=1048:4` se agregó después, llevando el total a **36 icons**;
+  `google=1102:4` (monochrome G, fuente Simple Icons, 2026-06-10) — total **37 icons**),
   each rebound to its chip's own semantic color (`primary`, `success-fg`,
   `warning-fg`, `destructive-fg`, `info-fg`, `foreground`, `foreground-muted`)
 - `FillAxisNote` (renamed from `InstallNote`) — "warning" at 20px
@@ -154,7 +253,8 @@ variable — 0 mismatches.
 **outline is the system default; filled is reserved for specific active/selected
 cases**, exactly the distinction the user raised. The CDN's `/default/24px.svg`
 endpoint already returns `fill 0` (outline) — confirmed by zoom-screenshotting
-`home`/`star`/`favorite` as hollow strokes — so **the whole 35-icon library is
+`home`/`star`/`favorite` as hollow strokes — so **the whole Material-sourced set
+(36 of the 37 icons; `google` is a brand glyph outside the fill axis) is
 already aligned with the documented default with no rework needed**. A parallel
 `fill 1` (solid) icon set for active/selected states does not exist yet — flagged as
 a v0.2 item (see `FillAxisNote` copy on the page, which now documents this gap).
@@ -230,6 +330,58 @@ Validated end-to-end with Button v0.1.0. Repeat this shape for every component:
 6. **Validate**: `get_metadata` + `get_screenshot`, show the user, get explicit
    approval before starting the next component.
 
+## Page template — estructura de referencia (medida desde Password Input v1.0.0)
+
+Toda página de componente sigue esta estructura exacta. Los valores son los medidos
+del frame real de Password Input (`957:63`) — úsalos como fuente de verdad, no
+los valores de Button (que difieren en algunos detalles por haberse construido antes).
+
+```
+wrapper  FRAME  VERTICAL  w=1424 FIXED  h=AUTO
+│  padding: 48 all  gap: 40  cornerRadius: 12
+│  fill:   color/background-secondary  (VariableID:15:4)
+│  stroke: color/ring  (VariableID:15:29)  strokeWeight: 2
+│
+├─ header  FRAME  VERTICAL  w=FILL  h=AUTO  gap: 12  (sin padding)
+│   ├─ [nombre]   TEXT  Inter Semi Bold  30px  color/foreground      (VariableID:15:12)
+│   ├─ [descripción]  TEXT  Inter Regular  16px  color/foreground-muted (VariableID:15:13)
+│   │     → FILL width + textAutoResize HEIGHT  (ver receta anti-colapso)
+│   └─ [versión]  TEXT  Inter Regular  12px  color/foreground-muted
+│         → formato "v1.0.0"
+│
+├─ variants-section  FRAME  VERTICAL  w=FILL  h=AUTO  gap: 16  (sin padding)
+│   ├─ [label]  TEXT  Inter Regular  12px  color/foreground-muted
+│   │     → formato "Variants · {Nombre}"
+│   └─ ComponentSet  (el grid de variantes)
+│
+└─ demo-section  FRAME  VERTICAL  w=FILL  h=AUTO  gap: 16  (sin padding)
+    ├─ [label]  TEXT  Inter Regular  12px  color/foreground-muted
+    │     → formato "Demo · {Descripción corta}"
+    └─ demo-row  FRAME  HORIZONTAL  HUG×HUG  gap: 16
+          → instancias del ComponentSet con props representativas
+```
+
+**Notas de construcción:**
+
+- El `wrapper` mide **1424px** de ancho (no 1200 — ese era el valor original de Button,
+  corregido a 1424 a partir de Input). Usar siempre 1424.
+- La descripción del `header` debe seguir el patrón documentado en
+  "Language conventions → Header description": caso de uso primero,
+  diferenciador del Input base después.
+- El `wrapper` va como único hijo de la página; `figma.currentPage.children[0]`
+  siempre debe ser el `wrapper`.
+- **Todos los contenedores internos (`header`, `variants-section`, `demo-section` y
+  cualquier sección adicional) deben tener `primaryAxisSizingMode = 'AUTO'`
+  (height HUG) para que se adapten al contenido interno.** El `wrapper` padre también
+  es `AUTO` en height — así toda la página crece con el contenido sin alturas fijas
+  que corten o dejen espacio vacío. Solo el ancho del `wrapper` es `FIXED` (1424px).
+  La regla es: **ancho FIXED en el wrapper, todo lo demás HUG en altura.**
+- Secciones adicionales (e.g. `usage-section`, `a11y-section`) se insertan
+  como hermanos de `variants-section` y `demo-section`, mismo patrón: label 12px
+  muted + contenido debajo, gap 16, sin padding, height HUG.
+- El `strokeWeight` del `wrapper` es **2px** (no 1px como en Button).
+  Verificado en Password Input, Phone Input y los últimos componentes del Stage 2.
+
 ## Progress — roadmap status as of v0.7.0
 
 **Approved build order** (5 groups, ~19 components total incl. Button):
@@ -241,11 +393,23 @@ Validated end-to-end with Button v0.1.0. Repeat this shape for every component:
 
 **19 componentes cerrados (Button + 18)** — Stage 2 COMPLETO. Detalle por componente:
 
+> **Nota sobre IDs (2026-06-11)**: los IDs entre paréntesis en las entradas de abajo
+> son **IDs de ComponentSet** (verificado: Label `275:2` y Badge `322:2` son los sets,
+> que viven en las páginas `265:2` y `311:2` respectivamente) — NO IDs de página. Los
+> IDs de página autoritativos están en el catálogo de arriba. Dos componentes de esta
+> lista fueron **reemplazados** después del cierre de Stage 2 (ver sus entradas):
+> Separator → Divider y Tab → Tab / Item.
+
 - **Label** (`275:2`, 6 var. `Size×State`): primer caso donde un eje tuvo que
   ser VARIANT en vez de BOOLEAN porque cambiaba *color*, no solo visibilidad
   (`componentPropertyReferences` de tipo BOOLEAN solo puede bindear
   `visible`/`characters`/`mainComponent` — nunca un fill).
-- **Separator** (`300:2`, 2 var. `Orientation`): construido como `LINE` con
+- **Separator** (`300:2`, 2 var. `Orientation`) — **⚠️ REEMPLAZADO por Divider**
+  (página `744:2`, ComponentSet `Divider / Line` = `744:13`, 4 var.
+  `Orientation×Style`: Horizontal Default/Label/Section + Vertical Default).
+  El Separator original ya no existe en el archivo; el registro histórico de su
+  construcción se conserva abajo porque la técnica de `LINE` sigue vigente:
+  construido como `LINE` con
   `stroke`/`strokeWeight` bindeados — decisión basada en `scopes` de los
   tokens (`STROKE_COLOR`/`STROKE_FLOAT`), no en intuición. Técnica de
   reposicionar una `LINE` rotada (compensar el offset del bounding box tras
@@ -285,8 +449,12 @@ Validated end-to-end with Button v0.1.0. Repeat this shape for every component:
   a la primera. Propiedades: `Title`/`Description`(TEXT), `Show Icon`/
   `Show Description`(BOOLEAN). Demo con 4 instancias reales (`setProperties`
   para `Title#502:0`/`Description#502:6`).
-- **Tabs — `Tab`** (página `523:2`, ComponentSet `525:6`, 3 var. eje único
-  `State` Active/Inactive/Disabled — primer componente del Grupo 4):
+- **Tabs — `Tab`** (página `523:2`, ComponentSet `525:6` — **⚠️ AMBOS IDs YA NO
+  EXISTEN**: el componente fue reconstruido como **`Tab / Item`** en la página
+  Tabs actual (`726:2`), ComponentSet `881:23`, 8 var. `Type×State` =
+  Pill/Underline × Default/Active/Hover/Disabled, con demo de barra completa
+  por cada Type. La entrada original se conserva como registro histórico:)
+  3 var. eje único `State` Active/Inactive/Disabled — primer componente del Grupo 4:
   trigger `HORIZONTAL` auto-layout (padding `space/2`/`space/3`,
   `radius/sm`); Active = fondo `color/background` + `elevation/sm` +
   texto `color/foreground` (superficie elevada, mayor contraste);
@@ -340,7 +508,9 @@ Validated end-to-end with Button v0.1.0. Repeat this shape for every component:
   properties — el binding cambia anchos al adoptar el texto default
   (pasó en Tabs Y aquí: hubo que rearmar el grid porque "Información
   adicional" es más largo que los placeholders iniciales).
-- **Popover** (`605:2`, construido antes del grupo — ver sesión anterior).
+- **Popover** (página `597:2`, ComponentSet `600:10`, 4 var. eje único
+  `Position` Top/Bottom/Left/Right — construido antes del grupo; el ID `605:2`
+  que figuraba aquí ya no existe en el archivo).
 - **Dropdown Menu** (`612:2`, ComponentSet `613:2` "Menu Item", 12 var.
   `Type×State` Default/Checkbox/Radio × Default/Hover/Disabled/Destructive):
   items HORIZONTAL con icono oculto + label FILL + shortcut oculto. Las
@@ -567,7 +737,7 @@ icon slots were still empty *tinted-frame placeholders* — they showed/hid but
 couldn't actually display an icon. Final step: replace each placeholder FRAME
 with a live `INSTANCE` of `Icon/star` (the chosen generic default — neutral,
 recognizable, commonly used as a UI-kit sample icon) wired as an
-`INSTANCE_SWAP` component property scoped to the full 35-icon library. Recipe,
+`INSTANCE_SWAP` component property scoped to the full 37-icon library. Recipe,
 validated across all 15 variants × 2 sides = 30 instances with 0 mismatches:
 
 1. `componentSet.addComponentProperty('Icon Left', 'INSTANCE_SWAP', '208:31')`
@@ -576,7 +746,7 @@ validated across all 15 variants × 2 sides = 30 instances with 0 mismatches:
 2. `componentSet.editComponentProperty(fullKey, { preferredValues: [...] })` —
    `preferredValues` is `{ type: 'COMPONENT', key: <component.key> }[]`, using
    each icon's **`.key`** (the library key hash, available even on local/
-   unpublished components — confirmed). Pass *all* 35 icons so the swap picker
+   unpublished components — confirmed). Pass *all* 37 icons so the swap picker
    in Dev Mode/Figma shows the entire library, not just one option.
 3. **Same clone/reparent/wire ordering bug applies to `createInstance()`.** A
    freshly created instance is not yet a "symbol sublayer" until it's been
@@ -590,7 +760,7 @@ validated across all 15 variants × 2 sides = 30 instances with 0 mismatches:
    === 'VECTOR')` (every `Icon/<name>` shares the identical internal layer path
    `COMPONENT > Frame > Vector`), read the label's `fills[0].boundVariables.color.id`,
    fetch the variable, `setBoundVariableForPaint` on the vector's fill. Because
-   all 35 icons share that exact layer path, this tint binding **survives any
+   all 37 icons share that exact layer path, this tint binding **survives any
    future `INSTANCE_SWAP`** the user performs in their own files — swapping
    `Icon Left` from `star` to `arrow_back` keeps the same `Vector` fill binding.
 5. Validate: `node.componentPropertyReferences.{visible,mainComponent}` match
@@ -601,7 +771,7 @@ validated across all 15 variants × 2 sides = 30 instances with 0 mismatches:
 
 Final property set on `Button` after this pass: `Label` (TEXT), `Show Icon Left`
 / `Show Icon Right` (BOOLEAN), `Icon Left` / `Icon Right` (INSTANCE_SWAP, default
-`Icon/star`, scoped to all 35 icons), `Variant` / `Size` (VARIANT) — 15 variants,
+`Icon/star`, scoped to all 37 icons), `Variant` / `Size` (VARIANT) — 15 variants,
 fully wired end-to-end from boolean visibility through to swappable, auto-tinted
 vector icon instances.
 
@@ -724,6 +894,36 @@ worked elsewhere in the file (it does — Button uses the identical
 create→rescale-once→reparent order, see "Bug fix — icon size must scale
 with the `Size` variant" above).
 
+### Validación — `Icon/done_all` a 3 tamaños (prueba explícita, 2026-06-10)
+
+Se crearon 3 instancias de `Icon/done_all` (`1048:4`) con `rescale()` siguiendo
+la receta exacta, se midieron las 3 capas internas y se verificó visualmente:
+
+```
+targetPx | INSTANCE  | Frame (inner) | vector (glyph) | fill bound
+---------|-----------|---------------|----------------|------------------
+  12px   |  12 × 12  |   12 × 12     |   11 × 6       | VariableID:15:12 ✓
+  16px   |  16 × 16  |   16 × 16     |   14 × 7       | VariableID:15:12 ✓
+  20px   |  20 × 20  |   20 × 20     |   18 × 9       | VariableID:15:12 ✓
+```
+
+**Conclusión verificada:**
+- `rescale()` propaga a TODOS los hijos — INSTANCE + Frame interno + vector
+  alcanzan exactamente el tamaño objetivo. `resize()` solo cambiaría el
+  bounding box de la INSTANCE dejando Frame y vector en 24×24 nativo.
+- El binding `color/foreground` sobrevive al rescale en los 3 casos.
+- La estructura `COMPONENT > clip (clipsContent=true) > vector` NO causa
+  el problema de escalado — el frame `clip` escala junto con todo. El problema
+  de escalado siempre fue usar `resize()` en vez de `rescale()`.
+- Receta mínima validada:
+
+```js
+const inst = master.createInstance();   // freshly created
+inst.rescale(targetPx / 24);            // ONE call, BEFORE reparenting
+parentFrame.appendChild(inst);          // reparent after rescale
+// No resize(), no segundo rescale(), no mutaciones previas.
+```
+
 ## Section-divider context card — "C O M P O N E N T S" page
 
 Mirroring the "F O U N D A T I O N S" divider page in the foundations file, the
@@ -770,6 +970,30 @@ neutral Spanish. Caught and fixed in Button v0.1.0: a "Ghost" → "Tertiary" nam
 drift (the description still named the old variant after a rename) and an "Elegí"
 voseo slip — copy that references variant names or uses verb conjugations needs a
 final pass against the *actual built* variant names before validation.
+
+### Header description — estructura obligatoria
+
+La descripción del `header` de cada página de componente debe responder **primero**
+la pregunta del diseñador ("¿cuándo lo uso?") y **después** explicar la estructura.
+El patrón validado en Password Input y Phone Input (v0.8.0):
+
+```
+Úsalo [caso de uso principal — dónde y cuándo].
+Extiende [componente base] con [diferenciadores concretos].
+```
+
+- **Incorrecto** — describe qué tiene el componente, no para qué sirve:
+  *"Campo de contraseña con candado y toggle de visibilidad. Extiende la estructura
+  del Input del DS con íconos lock y visibility integrados."*
+- **Correcto** — caso de uso primero, diferenciador después:
+  *"Úsalo en formularios de login, registro o cambio de contraseña — cualquier flujo
+  donde el usuario deba ingresar una credencial confidencial. Extiende el Input base
+  con un ícono lock fijo a la izquierda y un toggle de visibilidad a la derecha que
+  alterna entre texto enmascarado (••••) y legible, sin necesidad de construir esa
+  lógica fuera del DS."*
+
+Si el componente no extiende uno existente, el segundo bloque describe su rol en el
+sistema: *"Úsalo para [caso de uso]. Es el único componente del DS que [valor único]."*
 
 ## Open questions — status update (v0.5.0)
 
