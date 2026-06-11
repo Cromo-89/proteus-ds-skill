@@ -419,12 +419,30 @@ Banner 74px de alto, items 344×66, wrappers a 1189/1163px. Un escaneo del mismo
 patrón en las 52 páginas (FRAME width<60 con hijos FILL + TEXT width<40 con >8
 chars) salió LIMPIO — eran los únicos dos casos.
 
-**Screenshots del MCP pueden quedar desfasados tras relayouts masivos:** tras el
-fix, `get_screenshot` siguió mostrando los íconos de Banner cortados en el borde
-izquierdo (incluso con `contentsOnly:true` y tras nudge de visibilidad), pero
-`absoluteRenderBounds` — calculado por el renderer real de la app — los reporta
-en posición correcta (x=188, dentro del banner), y un banner de los 5 sí
-renderizaba bien (staleness parcial por nodo). Regla: si el screenshot contradice
-a `absoluteRenderBounds`, confiar en `absoluteRenderBounds` y re-capturar después
-de un rato — el servicio de screenshots renderiza desde un estado sincronizado
-que puede ir detrás del archivo vivo.
+**Las instancias que vivieron el colapso quedan con geometría interna CORRUPTA
+— y `absoluteRenderBounds` MIENTE sobre ellas:** tras des-colapsar los frames,
+4 de 5 banners (y los 6 list items) seguían renderizando el ícono líder cortado
+en el borde izquierdo, fuera de su posición. Diagnóstico engañoso: la API
+reportaba TODO correcto — `x=20`, `absoluteBoundingBox` y hasta
+`absoluteRenderBounds` (x=188, dentro del banner) — pero el render real (tanto
+`get_screenshot` como `node.screenshot()` in-app) mostraba el glifo ~30px fuera.
+Ni el nudge de visibilidad ni `contentsOnly:true` lo arreglan. **Primera
+hipótesis (equivocada): "screenshot del servidor desfasado" — descartada porque
+`node.screenshot()` renderiza desde el archivo vivo y mostraba lo mismo.**
+
+**Receta de reparación (la misma de Button: nunca parchear geometría corrupta):
+recrear las instancias desde cero.** Por cada instancia rota: leer
+`mainComponent` (preserva la variante) y `componentProperties` (filtrar las
+`type==='VARIANT'`), `master.createInstance()` → `insertChild(idx, fresh)` →
+`old.remove()` → `layoutSizingHorizontal='FILL'` → `setProperties(props)`.
+Bonus: las instancias recreadas recuperaron subtítulos/descripciones que las
+corruptas ni siquiera renderizaban.
+
+**Gotcha de slots de ícono en List Item**: el slot líder se llama `icon`
+(minúscula — `swapComponent` sobre él), el trailing se llama `Icon/chevron_right`.
+Un `findOne(n => n.name.startsWith('Icon/'))` atrapa el CHEVRON, no el líder
+(pasó: 5 chevrons swapeados por error, restaurados con `Icon/chevron_right` =
+`208:82`). Los swaps de ícono NO son component properties en List Item — son
+`swapComponent` directo sobre el sublayer, así que al recrear la instancia se
+pierden y hay que re-aplicarlos (Cuenta=person, Notificaciones=notifications,
+Privacidad=visibility, Apariencia=tune, Seguridad=lock).

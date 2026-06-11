@@ -393,7 +393,12 @@ wrapper  FRAME  VERTICAL  w=1424 FIXED  h=AUTO
   demo-col a 40px × 7110px de alto; y en List Item: list a 48px). El fix es
   poner `layoutSizingHorizontal='FILL'` en el frame colapsado, no tocar a los
   hijos. Detector validado: buscar `FRAME`s con `width < 60` que tengan hijos
-  con `layoutSizingHorizontal === 'FILL'`.
+  con `layoutSizingHorizontal === 'FILL'`. **Y después del fix, verificar las
+  instancias que vivieron el colapso**: pueden quedar con geometría interna
+  corrupta donde `absoluteRenderBounds` reporta posiciones correctas que el
+  render real NO respeta — la única reparación es recrearlas
+  (`createInstance` + `setProperties` + re-aplicar swaps de íconos), ver la
+  receta completa en `references/learnings.md` § Normalización de anchos.
 - La descripción del `header` debe seguir el patrón documentado en
   "Language conventions → Header description": caso de uso primero,
   diferenciador del Input base después.
