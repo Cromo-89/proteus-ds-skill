@@ -606,51 +606,49 @@ cualquier texto que no sea hijo de una INSTANCE.
 
 ## Componentes actualizados (2026-06-14)
 
-### Dialog — variante con slot de ilustración
+### Dialog — variante con slot de contenido
 
 El componente `Dialog` pasó de COMPONENT único a **ComponentSet** con eje `Type`:
 
 | Variante | ID | Tamaño | Uso |
 |---|---|---|---|
 | `Type=Default` | `640:10` | 480×213 | Confirmaciones, alertas, formularios cortos |
-| `Type=Illustration` | `1415:29` | 480×413 | Estados vacíos, errores, onboarding |
+| `Type=Illustration` | `1415:29` | 480×353 | Estados vacíos, errores, onboarding |
 
 **Estructura de `Type=Illustration`:**
 ```
 Dialog (COMPONENT_SET id:1415:88, Type=Default|Illustration)
   ├─ Type=Default     (COMPONENT id:640:10,  VERTICAL AUTO, r:12) — 480×213
-  └─ Type=Illustration (COMPONENT id:1415:29, VERTICAL AUTO, r:12) — 480×405
-       ├─ header        FRAME 480×64   (título + close-btn)
-       ├─ divider       RECT 480×1
-       ├─ body          FRAME 480 AUTO  padding:20/24/20/24  gap:12
-       │    ├─ illustration  FRAME FILL×180  clipsContent:true  r:8
-       │    │    └─ [slot]   INSTANCE_SWAP → Illustration/no_found (default)
-       │    └─ description   TEXT FILL
-       ├─ divider-footer RECT 480×1
-       └─ footer        FRAME 480×67   (2 botones)
+  └─ Type=Illustration (COMPONENT id:1415:29, VERTICAL AUTO, r:12) — 480×353
+       ├─ header          FRAME 480×64   (title TEXT + close-btn)
+       ├─ divider         RECT  480×1
+       ├─ "Empty State"   SLOT  480×220  VERTICAL AUTO   ← slot nativo Figma (id:1415:35)
+       ├─ divider-footer  RECT  480×1
+       └─ footer          FRAME 480×67   (2 Button instances)
 ```
 
-**Component properties expuestas:**
-- `Title#1415:1` (TEXT) — título del dialog
-- `Description#1415:2` (TEXT) — cuerpo
-- `Illustration#1415:5` (INSTANCE_SWAP) — ilustración en el slot; default `Illustration/no_found`
-- `Show Description#1415:3` (BOOLEAN)
-- `Show Footer#1415:4` (BOOLEAN)
+El nodo `SLOT` es el mecanismo nativo de Figma para contenido intercambiable: en el master está vacío; cada instancia lo rellena con la ilustración + textos que correspondan. No usa INSTANCE_SWAP ni component properties — el diseñador arrastra contenido directamente al slot.
 
-**Patrón de uso en templates:**
+**Patrón de uso en templates (plugin API):**
 ```js
-const illComp = figma.getNodeById("1415:29"); // Type=Illustration
-const instance = illComp.createInstance();
-instance.setProperties({
-  "Illustration#1415:5": "1216:79",          // swap a Illustration/no_data
-  "Title#1415:1": "Todavía no hay proyectos",
-  "Description#1415:2": "Descripción aquí.",
-});
+// 1. Crear instancia de Type=Illustration
+const inst = figma.getNodeById("1415:29").createInstance();
+panel.appendChild(inst);
+inst.x = centerX; inst.y = centerY;
+
+// 2. Rellenar el slot con contenido (buscar por nombre dentro de la instancia)
+//    El slot acepta cualquier nodo hijo que el diseñador coloque
+//    — ilustración, título, descripción, botones extra, etc.
 ```
 
-**Template Empty·Error** (page `1086:6`) actualizado: reemplazó `error-card` y `empty-card` standalone por instancias `Type=Illustration` con contenido correcto:
-- 404 Error → `Illustration/no_found`, título "Página no encontrada"
-- Empty State → `Illustration/no_data`, título "Todavía no hay proyectos"
+**Template Empty·Error** (page `1086:6`) — estado final tras edición manual:
+
+| Panel | Header (override) | Slot: ilustración | Slot: título | Footer |
+|---|---|---|---|---|
+| 404 Error | "Página no encontrada" | `Illustration/searching` | "Sin resultados" | "Limpiar filtros" |
+| Empty State | "Todavía no hay proyectos" | `Illustration/searching` | "Sin resultados" | "Ver tutorial" · "+ Crear proyecto" |
+
+Ambas tarjetas usan `Dialog/Type=Illustration` instanciado con contenido en el slot.
 
 ---
 
