@@ -1,6 +1,6 @@
 ---
 name: proteus-components
-version: 0.11.1
+version: 0.12.0
 description: >-
   Build component sets for ProteusDS in Figma on top of the foundations
   tokens — variant matrices (Style × Size), component properties (TEXT,
@@ -33,7 +33,7 @@ as shown (preserve all spacing and box-drawing characters):
 │              C O M P O N E N T S                      │
 │                                                       │
 │   Design System for ProteusDS  ·  Stage 2/3           │
-│   Variant Sets · Properties · Pages         v 0.11.1  │
+│   Variant Sets · Properties · Pages         v 0.12.0  │
 │                                                       │
 ╰───────────────────────────────────────────────────────╯
 ```
@@ -56,7 +56,10 @@ Figma file: **`Ohc3OVwwd3MwI4SvIdk3EY`** (Proteus DS).
 
 ## Skill files
 
-- `SKILL.md` — this file (reglas operativas y recetas definitivas)
+- `SKILL.md` — este archivo (reglas operativas, recetas y gotchas activos)
+- `config.json` — configuración del skill (figmaFileKey, version)
+- `references/component-catalog.md` — IDs de páginas, ComponentSets, ejes, properties e icon map completo
+- `references/button-recipes.md` — recetas de implementación de Button v0.1.0 (variable cache, INSTANCE_SWAP, icon slots)
 - `references/token-contract.md` — authoritative token spec (naming, tiers, OKLCH, shadcn mapping)
 - `references/learnings.md` — registro histórico: decisiones, bugs y validaciones por componente
 - `tokens/` — copies of the token JSON files components bind against (`primitives.json`,
@@ -64,104 +67,15 @@ Figma file: **`Ohc3OVwwd3MwI4SvIdk3EY`** (Proteus DS).
   `opacity.json`, `elevation.json`, `icon.json`, `motion.json`, `zindex.json`)
 - `icons-svg/` + `icons-svg.json` — los 37 SVG fuente de la librería de íconos
 
-## Component catalog — 52 componentes en 5 categorías
+## Component catalog — 52 componentes
 
-Estructura de páginas en Figma (`Ohc3OVwwd3MwI4SvIdk3EY`). Cada categoría tiene su separador `↓ NOMBRE` en el panel de páginas. **Los IDs de cada componente son IDs de PÁGINA (canvas)**, verificados contra el archivo el 2026-06-11 — usarlos con `figma.getNodeByIdAsync(id)` o `setCurrentPageAsync` sin redescubrir.
+→ IDs de página, ComponentSets, ejes y properties en **`references/component-catalog.md`**.
 
-| Categoría | # | Componentes (con ID de página) |
-|---|---|---|
-| **📝 Forms** (separador `1072:2`) | 15 | Checkbox `391:2` · Date Picker `718:2` · File Upload `706:2` · Form Field `739:2` · Input `331:2` · Number Input `711:2` · OTP Input `713:2` · Password Input `955:2` · Phone Input `956:2` · Radio `419:2` · Search `712:2` · Select `628:2` · Slider `705:2` · Switch `432:2` · Textarea `668:2` |
-| **🧭 Navigation** (separador `1072:3`) | 6 | Breadcrumb `696:2` · Navbar `714:2` · Pagination `695:2` · Sidebar `736:2` · Stepper `715:2` · Tabs `726:2` |
-| **🪟 Overlays** (separador `1072:4`) | 8 | Command Palette `724:2` · Context Menu `716:2` · Dialog `640:2` · Dropdown Menu `612:2` · Notification Center `747:2` · Popover `597:2` · Toast `681:2` · Tooltip `546:2` |
-| **🔔 Feedback** (separador `1072:5`) | 6 | Alert `496:19` · Banner `704:2` · Empty State `697:2` · Progress `677:2` · Progress Bar `728:2` · Skeleton `678:2` |
-| **🖼️ Display** (separador `1072:6`) | 17 | Accordion `533:2` · Avatar `464:2` · Avatar Group `732:2` · Badge `311:2` · Button `166:2` · Card `444:2` · Chat Message `755:2` · Chip `710:2` · Divider `744:2` · Feature Card `763:2` · Label `265:2` · List Item `707:2` · Rating `729:2` · Stat Card `708:2` · Table `644:2` · Timeline `727:2` · Toggle Group `733:2` |
-
-Otras páginas clave: Cover `0:1` · divisor `C O M P O N E N T S` `53:756` (Context card `259:2`) · Icons `207:2` · separador `↓ T E M P L A T E S` `1086:2`.
-
-**Truco para listar todas las páginas del archivo**: `get_metadata` sin `nodeId` puede devolver solo las páginas ya cargadas por el cliente (lazy loading). Pasar un `nodeId` inválido (e.g. `0:0`) fuerza un error cuyo mensaje incluye la lista COMPLETA de páginas con sus IDs.
-
-### Extensiones — ComponentSets, ejes y properties (auditado 2026-06-11)
-
-Los 19 formales de Stage 2 están detallados en `references/learnings.md`. Esta tabla
-cubre los componentes construidos después (más Tabs y Divider, que son rebuilds).
-Properties listadas sin tipo = TEXT.
-
-| Componente | Set / Master | Ejes (variantes) | Properties |
-|---|---|---|---|
-| Date Picker | `Cell` `718:15` · `Calendar` `854:216` · `Date Picker` `857:191` | Cell: State ×6 · Calendar: View Month/Year · Picker: State Closed/Open | — |
-| File Upload | `706:32` | State Default/Hover/Filled | Title · Description · Hint |
-| Form Field | `Item` `947:32` | State Default/Focused/Filled/Error/Disabled | — |
-| Number Input | `711:24` | State Default/Focus/Disabled | Value |
-| OTP Input | `713:47` | State Default/Focus/Filled/Error | — |
-| Password Input | `957:62` | Size ×3 × State ×5 (15 var.) | Placeholder · Helper Text |
-| Phone Input | `958:2` | Size ×3 × State ×5 (15 var.) | Country Code · Placeholder · Helper Text |
-| Search | `712:35` | State Default/Focus/Filled/Disabled | Query · Show Clear (BOOL) |
-| Slider | `705:15` | State Default/Focus/Disabled | Value |
-| Textarea | `668:23` | State ×5 | Placeholder · Helper Text |
-| Breadcrumb | `Item` `696:13` | State Default/Active | Label |
-| Navbar | `714:38` | Type Desktop/Mobile/Mobile Open | — |
-| Pagination | `Item` `695:27` | Type Page/Ellipsis/Previous/Next × State ×3 (8 var.) | Label |
-| Sidebar | `Item` `905:80` · `SubItem` `906:60` · `Sidebar` `909:133` | Item: Type Link/Section/Separator × HasSubItems × State ×4 (10 var.) · SubItem: State ×4 · Sidebar: Expanded/Collapsed | — |
-| Stepper | `Step` `715:17` | State Pending/Active/Completed | Number · Label |
-| Tabs (rebuild) | `Tab / Item` `881:23` | Type Pill/Underline × State ×4 | — |
-| Command Palette | `Result` `724:15` | Type Item/Section × State Default/Hover (3 var.) | — |
-| Context Menu | `Item` `716:42` | Type Default/Danger/Disabled/Separator/Submenu × State ×2 (8 var.) | Label · Shortcut |
-| Notification Center | `Notification / Item` `747:18` | State Unread/Read | — |
-| Toast | `681:53` | Status ×5 | Title · Description |
-| Banner | `704:53` | Status ×5 | Title · Description · Show Description (BOOL) · Show Close (BOOL) |
-| Empty State | master único `697:3` | — | Icon (INSTANCE_SWAP) · Title · Description · Show Action (BOOL) · Action Label |
-| Progress | `934:2` | Size SM/MD/LG × Status ×4 (12 var.) | — |
-| Progress Bar | `936:2` | Size ×3 × Status ×4 (12 var.) | Value |
-| Skeleton | `678:8` | Shape Text/Block/Circle/Rectangle/Button | — |
-| Avatar Group | `1007:47` | Size SM/MD/LG | — |
-| Chat Message | `Chat / Message` `755:20` | Type Received/Sent/System | — |
-| Chip | `710:29` | Type Filter/Action × State ×3 | Label |
-| Divider (rebuild) | `Line` `744:13` | Orientation × Style (4 var.) | — |
-| Feature Card | `Card` `763:43` | Color Purple/Green/Blue/Orange/Red | — |
-| List Item | `707:35` | State ×4 | Title · Subtitle · Show Subtitle (BOOL) · Show Chevron (BOOL) |
-| Rating | `Star` `729:9` | State Full/Half/Empty | — |
-| Stat Card | `708:45` | Trend Neutral/Positive/Negative | Metric · Value · Period |
-| Timeline | `Item` `727:35` | Type Pending/Active/Completed/Error | — |
-| Toggle Group | `Item` `896:76` | Content Text/Icon/Both × State ×4 (12 var.) | — |
-
-## Foundations pages — extras (beyond tokens)
-
-Páginas de referencia visual en Figma que complementan las foundations de tokens:
-
-| Página | ID nodo | Contenido |
-|---|---|---|
-| `Grid & Breakpoints` | `1077:2` | 3 breakpoints (Mobile 375 · Tablet 768 · Desktop 1440) + grids dibujados con rectángulos de columna |
-| `↓ T E M P L A T E S` | `1086:2` | Separador de sección |
-| `Auth` | `1086:3` | Login card centrado — campo email, password, CTA primario, link registro |
-| `Dashboard` | `1086:4` | Sidebar 240px + topbar 56px + 4 stat cards + chart placeholder + actividad reciente |
-| `Settings` | `1086:5` | Sidebar app + nav de ajustes 220px + form card (2 cols) con campos y botón guardar |
-| `Empty · Error` | `1086:6` | Dos pantallas 1440×900: Error 404 (card centrado, botones) · Estado vacío (ilustración, feature list, CTA) |
-| `Dark · Light Mode` | `1091:2` | Comparación side-by-side: paleta de colores, mini shell, botones, formularios, badges y notification card en ambos modos |
-
-**Paleta de colores usada en templates** (hardcoded, dark mode):
-
-```js
-const C = {
-  bg:      { r: 0.055, g: 0.055, b: 0.085 },  // fondo de pantalla
-  card:    { r: 0.10,  g: 0.10,  b: 0.14  },  // tarjetas / paneles
-  sidebar: { r: 0.065, g: 0.065, b: 0.10  },  // sidebar app
-  topbar:  { r: 0.07,  g: 0.07,  b: 0.105 },  // topbar
-  input:   { r: 0.085, g: 0.085, b: 0.13  },  // fondo de inputs
-  primary: { r: 0.34,  g: 0.29,  b: 0.72  },  // acción primaria (Indigo)
-  text:    { r: 0.93,  g: 0.93,  b: 0.96  },  // texto principal
-  muted:   { r: 0.52,  g: 0.52,  b: 0.62  },  // texto secundario
-  border:  { r: 0.18,  g: 0.18,  b: 0.26  },  // bordes y separadores
-  success: { r: 0.20,  g: 0.72,  b: 0.45  },  // éxito
-  warning: { r: 0.95,  g: 0.65,  b: 0.20  },  // advertencia
-  error:   { r: 0.85,  g: 0.28,  b: 0.28  },  // error
-};
-```
-
-**Nota crítica para nuevas páginas**: `figma.createPage()` resuelve variables semánticas en modo Light. Usar colores hardcoded (neutral/900 = `{ r: 0.122, g: 0.122, b: 0.122 }`) y NO llamar `setExplicitVariableModeForCollection` después de fijar fills manuales.
+Cargar ese archivo cuando necesites el ID de una página específica o los ejes/properties de un ComponentSet.
 
 ## Version bump — checklist obligatorio
 
-Cuando se sube la versión del skill (e.g. `0.8.0` → `0.9.0`), **todos los archivos
+Cuando se sube la versión del skill (e.g. `0.11.0` → `0.12.0`), **todos los archivos
 que referencian la versión deben actualizarse en el mismo commit**. No es válido
 actualizar solo el SKILL.md.
 
@@ -169,9 +83,10 @@ actualizar solo el SKILL.md.
 
 | Archivo | Qué actualizar | Ejemplo |
 |---|---|---|
-| `proteus-components/SKILL.md` | Frontmatter línea 3: `version: X.X.X` | `version: 0.9.0` |
-| `proteus-components/SKILL.md` | Splash screen: `v X.X.X` al final de la línea de "Pages" | `v 0.9.0` |
-| `README.md` (raíz del repo) | Línea `proteus-components/`: `skill vX.X.X` | `skill v0.9.0` |
+| `proteus-components/SKILL.md` | Frontmatter línea 3: `version: X.X.X` | `version: 0.12.0` |
+| `proteus-components/SKILL.md` | Splash screen: `v X.X.X` al final de la línea de "Pages" | `v 0.12.0` |
+| `proteus-components/config.json` | Campo `"version"` | `"version": "0.12.0"` |
+| `README.md` (raíz del repo) | Línea `proteus-components/`: `skill vX.X.X` | `skill v0.12.0` |
 
 **Archivos de recursos — sin versión embebida, pero deben ir en el mismo commit si cambiaron:**
 
@@ -180,9 +95,10 @@ actualizar solo el SKILL.md.
 | `tokens/*.json` | Si se agregaron o modificaron tokens de foundations |
 | `references/token-contract.md` | Si cambió el contrato de tokens o el mapeo shadcn |
 | `references/learnings.md` | Si se documentó historia nueva (componente cerrado, bug, validación) |
-| `icons-svg/` + `icons-svg.json` | Si se agregaron o eliminaron íconos de la librería (regenerar el JSON desde la carpeta) |
+| `references/component-catalog.md` | Si se agregaron páginas, componentes, o cambió un ID |
+| `icons-svg/` + `icons-svg.json` | Si se agregaron o eliminaron íconos de la librería |
 
-Todos los cambios de una versión van en **un solo commit** — no commits parciales donde el SKILL.md dice v0.9.0 pero los tokens son del v0.8.0.
+Todos los cambios de una versión van en **un solo commit** — no commits parciales.
 
 **Archivos a actualizar para proteus-foundations** (cuando corresponda):
 
@@ -214,6 +130,31 @@ Known semantic variable IDs (skip re-discovery):
 - `color/primary` = `VariableID:15:16`, `color/primary-foreground` = `VariableID:15:17`
 - `color/ring` = `VariableID:15:29`, `color/background-secondary` = `VariableID:15:4`
 - Rest follow `color/<name>` — discover via `figma.variables.getLocalVariablesAsync('COLOR')`.
+
+## Foundations pages — paleta hardcoded y regla crítica
+
+→ IDs de páginas de templates en **`references/component-catalog.md`** §Foundations pages.
+
+**Paleta de colores usada en templates** (hardcoded, dark mode):
+
+```js
+const C = {
+  bg:      { r: 0.055, g: 0.055, b: 0.085 },  // fondo de pantalla
+  card:    { r: 0.10,  g: 0.10,  b: 0.14  },  // tarjetas / paneles
+  sidebar: { r: 0.065, g: 0.065, b: 0.10  },  // sidebar app
+  topbar:  { r: 0.07,  g: 0.07,  b: 0.105 },  // topbar
+  input:   { r: 0.085, g: 0.085, b: 0.13  },  // fondo de inputs
+  primary: { r: 0.34,  g: 0.29,  b: 0.72  },  // acción primaria (Indigo)
+  text:    { r: 0.93,  g: 0.93,  b: 0.96  },  // texto principal
+  muted:   { r: 0.52,  g: 0.52,  b: 0.62  },  // texto secundario
+  border:  { r: 0.18,  g: 0.18,  b: 0.26  },  // bordes y separadores
+  success: { r: 0.20,  g: 0.72,  b: 0.45  },  // éxito
+  warning: { r: 0.95,  g: 0.65,  b: 0.20  },  // advertencia
+  error:   { r: 0.85,  g: 0.28,  b: 0.28  },  // error
+};
+```
+
+**Nota crítica para nuevas páginas**: `figma.createPage()` resuelve variables semánticas en modo Light. Usar colores hardcoded (neutral/900 = `{ r: 0.122, g: 0.122, b: 0.122 }`) y NO llamar `setExplicitVariableModeForCollection` después de fijar fills manuales.
 
 ## Icon library — vector components on the "Icons" page
 
@@ -257,29 +198,7 @@ must be fetched externally (curl/Bash/WebFetch), bundled into one `{name: svgStr
 JSON map, and embedded as a JS object literal in the script's `code` string (mind the
 ~50,000-char cap — batch if the set grows).
 
-**Full ID map** (skip re-discovery — all live on the `Icons` page; fetch cross-page
-with `await figma.getNodeByIdAsync(id)`, which works regardless of current page):
-```
-home=208:4 search=208:7 settings=208:10 close=208:13 check=208:16 add=208:19
-menu=208:22 notifications=208:25 person=208:28 star=208:31 favorite=208:34
-edit=208:37 delete=208:40 arrow_back=208:43 arrow_forward=208:46 share=208:49
-download=208:52 upload=208:55 visibility=208:58 lock=208:61 mail=208:64
-calendar_today=208:67 filter_list=208:70 sort=208:73 more_vert=208:76
-expand_more=208:79 chevron_right=208:82 info=208:85 warning=208:88 error=208:91
-check_circle=208:94 help=208:97 logout=208:100 login=208:103 tune=224:4
-done_all=1048:4 google=1102:4
-expand_less=1208:4 open_in_new=1208:7 drag_indicator=1208:10 refresh=1208:13
-content_copy=1208:16 link=1208:19 bookmark=1208:22 archive=1208:25
-attach_file=1208:28 undo=1208:31 redo=1208:34 chevron_left=1208:37
-first_page=1208:40 last_page=1208:43 arrow_upward=1208:46 arrow_downward=1208:49
-schedule=1208:52 pending=1208:55 radio_button_unchecked=1208:58
-indeterminate_check_box=1208:61 circle=1208:64 send=1208:67 reply=1208:70
-comment=1208:73 phone=1208:76 video_call=1208:79 image=1208:82
-folder_open=1208:85 description=1208:88 play_arrow=1208:91 pause=1208:94
-cloud_upload=1208:97 bar_chart=1208:100 trending_up=1208:103
-trending_down=1208:106 pie_chart=1208:109 shopping_cart=1208:112
-credit_card=1208:115 receipt=1208:118
-```
+→ Mapa completo de IDs en **`references/component-catalog.md`** §Icon ID map.
 
 **Nota `circle` (fill1 — sólido):** a diferencia del resto del set (fill0/outline),
 `circle` usa la variante rellena de Material Symbols para diferenciarse de
@@ -357,7 +276,7 @@ Validated end-to-end with Button v0.1.0. Repeat this shape for every component:
    `cornerRadius` 16, fill = `color/background-secondary`, **stroke = `color/ring`**
    (1px). Inside it: `Header` (title, description, version) → `Section/<Name>` → the
    variant grid. This was retrofitted onto Button after the fact — for the next
-   component, build the wrapper FIRST (see "Page wrapper" learning below).
+   component, build the wrapper FIRST (see `references/button-recipes.md`).
 6. **Validate**: `get_metadata` + `get_screenshot`, show the user, get explicit
    approval before starting the next component.
 
@@ -446,12 +365,8 @@ histórico por componente (decisiones, ejes, properties, bugs y demos) vive en
 `references/learnings.md`.**
 
 > **Nota sobre IDs (2026-06-11)**: los IDs entre paréntesis en las entradas de
-> learnings.md son **IDs de ComponentSet** (verificado: Label `275:2` y Badge `322:2`
-> son los sets, que viven en las páginas `265:2` y `311:2` respectivamente) — NO IDs
-> de página. Los IDs de página autoritativos están en el catálogo de arriba. Dos
-> componentes de esa lista fueron **reemplazados** después del cierre de Stage 2:
-> Separator → Divider (página `744:2`, set `744:13`, 4 var. `Orientation×Style`) y
-> Tab → Tab / Item (página `726:2`, set `881:23`, 8 var. `Type×State`).
+> learnings.md son **IDs de ComponentSet** — NO IDs de página. Ver tabla
+> autoritativa en `references/component-catalog.md`.
 
 **Patrones nuevos consolidados en Grupo 5** (agregar a recetas):
 - **`counterAxisSizingMode` NO acepta `'FILL'`** (solo `'FIXED'`|`'AUTO'`);
@@ -559,126 +474,11 @@ filtered to what applies to components — see that file for the full catalogue.
 
 ## Learnings from Implementation — Button v0.1.0
 
-### Variable-resolution cache can get "stuck" after bulk clone + `combineAsVariants`
+→ Recetas detalladas en **`references/button-recipes.md`**: variable-resolution cache,
+page wrapper, icon tinting, Show Icon Left/Right, INSTANCE_SWAP wiring.
 
-After cloning 15 variants and combining them into a ComponentSet, the screenshot
-showed clearly wrong colors — the ComponentSet background read as light gray and
-"Primary" buttons rendered pure black — even though every `boundVariables.color`
-reference checked out correctly (right variable, right ID, no explicit mode overrides
-anywhere in the ancestor chain).
-
-**Diagnosis that worked:** create a brand-new node on the same page, bind it to the
-*same* variable through the *same* code path — it resolved correctly immediately.
-That isolated the problem to the existing nodes' cached resolved color, not the
-binding itself or the page/file mode context.
-
-**The fix:** force Figma to recompute every bound-variable resolution on the page by
-toggling its explicit variable mode for the affected collection —
-`page.setExplicitVariableModeForCollection(semanticCollection, '15:1')` (Light), then
-back to `'15:0'` (Dark), then reset to the collection's `defaultModeId`. This single
-nudge fixed **all 15 variants at once** — proof the bindings were correct all along
-and only the cached render was stale.
-
-**Rule of thumb:** if a freshly-built variant matrix screenshots with implausible
-colors but `boundVariables` reads back correctly on every node, don't start
-rebinding — toggle the page's explicit variable mode for the collection (and reset
-it) before assuming the bindings themselves are broken.
-
-### Page wrapper — build it first next time
-
-Button was built loose-on-canvas (header frame + floating ComponentSet + floating
-row/column labels), then wrapped after the fact into the foundations-style frame
-(`Section/Variants` → `Variant grid`). It worked, but required computing a bounding
-box and manually reparenting nine nodes with adjusted coordinates. **For the next
-component, create the page wrapper frame FIRST** (same recipe as workflow step 5)
-and build the header + variant grid as children of it from the start — saves a whole
-retrofit pass.
-
-### Icon placeholder tinting
-
-The `icon` placeholder frame (16×16, candidate for `INSTANCE_SWAP` once an icon
-library page exists) is bound to the *same* color variable as its sibling `label`
-text — read `label.fills[0].boundVariables.color.id`, fetch that variable, and reuse
-it for the icon's fill. This keeps icon tint automatically consistent with text tint
-across every Style variant without hand-mapping five separate token names.
-
-### `Show Icon` → `Show Icon Left` / `Show Icon Right` (post-icon-library update)
-
-Once the vector icon library existed, the single `Show Icon` boolean (one
-left-side-only placeholder) was replaced with **two independent booleans** —
-`Show Icon Left` and `Show Icon Right` — so a button can carry a leading icon, a
-trailing icon, or both (e.g. "Continue →", "← Back", a dropdown trigger with a
-chevron on the right). Recipe, validated across all 15 variants with 0 mismatches:
-
-1. `componentSet.addComponentProperty('Show Icon Left', 'BOOLEAN', false)` /
-   `...('Show Icon Right', 'BOOLEAN', false)` — returns the full `"Name#id"` key
-   needed for `componentPropertyReferences`.
-2. Per variant: rename the existing `icon` → `icon-left`, rewire
-   `componentPropertyReferences = { visible: leftKey }`.
-3. **Clone, then reparent, then wire — in that exact order.** `iconLeft.clone()`
-   followed *immediately* by `iconRight.componentPropertyReferences = {...}` throws
-   `"Can only set component property references on symbol sublayer"` — a clone is
-   not yet a confirmed sublayer of the symbol until it's actually been
-   `insertChild`'d into the variant. Reparent first (`variant.insertChild(labelIdx
-   + 1, iconRight)`, placing it *after* `label` so the order is `icon-left → label →
-   icon-right`), *then* set the reference.
-4. `componentSet.deleteComponentProperty(oldKey)` — look the full key up via
-   `Object.keys(componentSet.componentPropertyDefinitions).find(k =>
-   k.startsWith('Show Icon#'))` rather than hardcoding the `#id` suffix.
-5. Validate with a **temporary instance**: `variant.createInstance()` →
-   `instance.setProperties({ [leftKey]: true, [rightKey]: true, [labelKey]: '...' })`
-   → `screenshot()` → `instance.remove()`. This is the only way to preview a
-   boolean/property combination on the *master* component without leaving stray
-   instances behind.
-
-This pattern generalizes to any "slot" property pair (leading/trailing icon,
-prefix/suffix adornment, etc.) — clone the placeholder, not the property machinery.
-
-### Wiring `Icon Left` / `Icon Right` as real `INSTANCE_SWAP` properties
-
-Once the icon library existed and `Show Icon Left/Right` were in place, the two
-icon slots were still empty *tinted-frame placeholders* — they showed/hid but
-couldn't actually display an icon. Final step: replace each placeholder FRAME
-with a live `INSTANCE` of `Icon/star` (the chosen generic default — neutral,
-recognizable, commonly used as a UI-kit sample icon) wired as an
-`INSTANCE_SWAP` component property scoped to the full 37-icon library. Recipe,
-validated across all 15 variants × 2 sides = 30 instances with 0 mismatches:
-
-1. `componentSet.addComponentProperty('Icon Left', 'INSTANCE_SWAP', '208:31')`
-   — `defaultValue` for `INSTANCE_SWAP` is a component **node ID** string (here,
-   `Icon/star`'s id), not a key. Same for `'Icon Right'`.
-2. `componentSet.editComponentProperty(fullKey, { preferredValues: [...] })` —
-   `preferredValues` is `{ type: 'COMPONENT', key: <component.key> }[]`, using
-   each icon's **`.key`** (the library key hash, available even on local/
-   unpublished components — confirmed). Pass *all* 37 icons so the swap picker
-   in Dev Mode/Figma shows the entire library, not just one option.
-3. **Same clone/reparent/wire ordering bug applies to `createInstance()`.** A
-   freshly created instance is not yet a "symbol sublayer" until it's been
-   `insertChild`'d into the variant — so: `master.createInstance()` →
-   `variant.insertChild(idx, instance)` → `placeholder.remove()` → *then*
-   `instance.componentPropertyReferences = { visible: visKey, mainComponent:
-   swapKey }`. Setting references before reparenting throws the same "Can only
-   set component property references on symbol sublayer" error as the clone case.
-4. Re-tint the new instance to match its variant's label, exactly like the
-   placeholder-frame pattern but one level deeper: `instance.findOne(n => n.type
-   === 'VECTOR')` (every `Icon/<name>` shares the identical internal layer path
-   `COMPONENT > Frame > Vector`), read the label's `fills[0].boundVariables.color.id`,
-   fetch the variable, `setBoundVariableForPaint` on the vector's fill. Because
-   all 37 icons share that exact layer path, this tint binding **survives any
-   future `INSTANCE_SWAP`** the user performs in their own files — swapping
-   `Icon Left` from `star` to `arrow_back` keeps the same `Vector` fill binding.
-5. Validate: `node.componentPropertyReferences.{visible,mainComponent}` match
-   the expected keys, `node.mainComponent.name === 'Icon/star'`, size matches
-   the Size-variant icon scale (Small=16 / Medium=20 / Large=24 px — historia
-   completa del bug en `references/learnings.md`), and the nested vector's bound
-   color variable equals the label's. Preview via temporary instance with both swap
-   properties + booleans set + screenshot + remove.
-
-Final property set on `Button` after this pass: `Label` (TEXT), `Show Icon Left`
-/ `Show Icon Right` (BOOLEAN), `Icon Left` / `Icon Right` (INSTANCE_SWAP, default
-`Icon/star`, scoped to all 37 icons), `Variant` / `Size` (VARIANT) — 15 variants,
-fully wired end-to-end from boolean visibility through to swappable, auto-tinted
-vector icon instances.
+Consultarlas cuando se añadan component properties, se implemente un nuevo icon slot,
+o se debuggee rendering de tokens tras un bulk clone + `combineAsVariants`.
 
 ## Rescaling icon instances — the definitive recipe (supersedes earlier guidance)
 
@@ -778,4 +578,3 @@ plataforma con su diagnóstico, validaciones explícitas, la tarjeta de contexto
 la página divisora y las open questions resueltas — vive en
 `references/learnings.md`. Consultarlo cuando se necesite el "por qué" detrás de
 una regla de este archivo; las reglas mismas viven aquí.
-
