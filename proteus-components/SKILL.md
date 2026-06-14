@@ -1,6 +1,6 @@
 ---
 name: proteus-components
-version: 0.13.0
+version: 0.14.0
 description: >-
   Build component sets for ProteusDS in Figma on top of the foundations
   tokens — variant matrices (Style × Size), component properties (TEXT,
@@ -33,7 +33,7 @@ as shown (preserve all spacing and box-drawing characters):
 │              C O M P O N E N T S                      │
 │                                                       │
 │   Design System for ProteusDS  ·  Stage 2/3           │
-│   Variant Sets · Properties · Pages         v 0.13.0  │
+│   Variant Sets · Properties · Pages         v 0.14.0  │
 │                                                       │
 ╰───────────────────────────────────────────────────────╯
 ```
@@ -601,6 +601,54 @@ Para contenido de componentes (PasswordInput/PhoneInput): `fs:12 → caption/reg
 **Regla para componentes futuros**: aplicar `textStyleId` a TODOS los textos
 standalone antes de cerrar el componente — etiquetas de eje, demo labels, y
 cualquier texto que no sea hijo de una INSTANCE.
+
+---
+
+## Componentes actualizados (2026-06-14)
+
+### Dialog — variante con slot de ilustración
+
+El componente `Dialog` pasó de COMPONENT único a **ComponentSet** con eje `Type`:
+
+| Variante | ID | Tamaño | Uso |
+|---|---|---|---|
+| `Type=Default` | `640:10` | 480×213 | Confirmaciones, alertas, formularios cortos |
+| `Type=Illustration` | `1415:29` | 480×413 | Estados vacíos, errores, onboarding |
+
+**Estructura de `Type=Illustration`:**
+```
+Dialog (COMPONENT_SET id:1415:88, Type=Default|Illustration)
+  └─ Type=Illustration (COMPONENT id:1415:29, VERTICAL AUTO, r:12, clipsContent:true)
+       ├─ illustration  FRAME 480×200  clipsContent:true  topRadius:12
+       │    └─ [slot]   INSTANCE_SWAP → Illustration/no_found (default)
+       ├─ header        FRAME 480×64  (título + close-btn)
+       ├─ divider       RECT 480×1
+       ├─ body          FRAME 480×80  (descripción)
+       ├─ divider-footer RECT 480×1
+       └─ footer        FRAME 480×67  (2 botones)
+```
+
+**Component properties expuestas:**
+- `Title#1415:1` (TEXT) — título del dialog
+- `Description#1415:2` (TEXT) — cuerpo
+- `Illustration#1415:5` (INSTANCE_SWAP) — ilustración en el slot; default `Illustration/no_found`
+- `Show Description#1415:3` (BOOLEAN)
+- `Show Footer#1415:4` (BOOLEAN)
+
+**Patrón de uso en templates:**
+```js
+const illComp = figma.getNodeById("1415:29"); // Type=Illustration
+const instance = illComp.createInstance();
+instance.setProperties({
+  "Illustration#1415:5": "1216:79",          // swap a Illustration/no_data
+  "Title#1415:1": "Todavía no hay proyectos",
+  "Description#1415:2": "Descripción aquí.",
+});
+```
+
+**Template Empty·Error** (page `1086:6`) actualizado: reemplazó `error-card` y `empty-card` standalone por instancias `Type=Illustration` con contenido correcto:
+- 404 Error → `Illustration/no_found`, título "Página no encontrada"
+- Empty State → `Illustration/no_data`, título "Todavía no hay proyectos"
 
 ---
 
