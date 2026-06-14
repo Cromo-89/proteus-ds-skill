@@ -1,10 +1,10 @@
 ---
 name: proteus-foundations
-version: 1.9.0
+version: 1.10.0
 description: >-
   Build the foundations of the Proteus design system (ProteusDS) in Figma: all
   design tokens — color (dark-first matte, brand indigo, vivid states), typography
-  (Inter + JetBrains Mono, 13 composite styles), spacing (4px scale), radius, elevation,
+  (Inter + JetBrains Mono, 20 composite styles: body/caption con variantes regular/medium/bold), spacing (4px scale), radius, elevation,
   motion, z-index, border, opacity, and iconography (Material Symbols Rounded) — expressed
   as Figma variable collections, text styles, and effect styles with Dark (primary) and
   Light (secondary) modes, driven by 10 DTCG token files. Use this skill for anything
@@ -32,7 +32,7 @@ all spacing and box-drawing characters):
 │   └  └─┘└─┘┘└┘─┴┘┴ ┴ ┴ ┴└─┘┘└┘└─┘                  │
 │                                                       │
 │   Design System for ProteusDS  ·  Stage 1/3           │
-│   Tokens · Variables · Styles · Modes        v 1.9.0  │
+│   Tokens · Variables · Styles · Modes       v 1.10.0  │
 │                                                       │
 ╰───────────────────────────────────────────────────────╯
 ```
@@ -75,7 +75,7 @@ decision are in `references/token-contract.md`.
 | `primitives.json` | 1 — Primitive | `Primitives` collection (single mode) | Color ramps (OKLCH), space, radius, font primitives |
 | `semantic.dark.json` | 2 — Semantic | `Semantic` collection, **Dark mode (PRIMARY)** | 40 tokens; every value aliases a primitive |
 | `semantic.light.json` | 2 — Semantic | `Semantic` collection, Light mode (secondary) | Same 40 names, different primitive aliases |
-| `typography.json` | Composite | 13 Figma **Text Styles** | Inter sans + JetBrains Mono; no Figma variables |
+| `typography.json` | Composite | 20 Figma **Text Styles** | Inter sans + JetBrains Mono; body/caption con variantes regular/medium/bold; no Figma variables |
 | `elevation.json` | Accessory | 5 Figma **Effect Styles** | Subtle shadows; elevation reads via surface lightness |
 | `border.json` | Primitive | `Primitives` collection | borderWidth (none/thin/thick) + focusRing (width/offset) |
 | `opacity.json` | Primitive | `Primitives` collection | disabled 0.4 / hover 0.08 / pressed 0.12 / scrim 0.6 |
@@ -135,7 +135,7 @@ are written → use Tokens Studio for the semantic sync.
 
 ### Phase 2 — Figma styles
 
-4. Create 13 Text Styles from `typography.json`. Names mirror token paths (`text/display`, `text/heading/xl` … `text/code`).
+4. Create 20 Text Styles from `typography.json`. Body y caption tienen variantes de peso (`/regular`, `/medium`, `/bold`); heading/label/display/code llevan peso fijo. Nombres: `text/display`, `text/heading/xl` … `text/body/md/bold`, `text/caption/regular`, `text/caption/medium`, `text/code`.
 5. Create 5 Effect Styles from `elevation.json` (`elevation/none` through `elevation/xl`).
 
 ### Phase 3 — Presentation pages (one at a time, confirm before next)
@@ -223,7 +223,7 @@ Reglas de accesibilidad del sistema: foco siempre visible (`color/ring`, 2px wid
 ## Handoff
 
 When Phase 1 and 2 are complete: `Primitives` collection (single mode), `Semantic` collection
-(Dark + Light with aliases), 13 Text Styles, 5 Effect Styles. proteus-component can begin.
+(Dark + Light with aliases), 20 Text Styles, 5 Effect Styles. proteus-component can begin.
 
 When Phase 3 is complete: ProteusDS has a documented foundation ready for the Storybook and
 documentation site that proteus-code will generate.

@@ -1,5 +1,5 @@
 {
-  "$description": "Proteus type styles \u2014 Tier 3 composite styles over the font primitives (Inter sans, JetBrains Mono). Each becomes a Figma text style; components pick a style, never raw size/weight.",
+  "$description": "Proteus type styles — Tier 3 composite styles over the font primitives (Inter sans, JetBrains Mono). Each becomes a Figma text style; components pick a style, never raw size/weight. Body and caption expose weight variants (regular/medium/bold); heading, label, display, and code carry a fixed semantic weight.",
   "text": {
     "display": {
       "$type": "typography",
@@ -55,33 +55,99 @@
     },
     "body": {
       "lg": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{font.family.sans}",
-          "fontSize": "{font.size.lg}",
-          "fontWeight": "{font.weight.regular}",
-          "lineHeight": "{font.lineHeight.relaxed}",
-          "letterSpacing": "{font.letterSpacing.normal}"
+        "regular": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font.family.sans}",
+            "fontSize": "{font.size.lg}",
+            "fontWeight": "{font.weight.regular}",
+            "lineHeight": "{font.lineHeight.relaxed}",
+            "letterSpacing": "{font.letterSpacing.normal}"
+          }
+        },
+        "medium": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font.family.sans}",
+            "fontSize": "{font.size.lg}",
+            "fontWeight": "{font.weight.medium}",
+            "lineHeight": "{font.lineHeight.relaxed}",
+            "letterSpacing": "{font.letterSpacing.normal}"
+          }
+        },
+        "bold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font.family.sans}",
+            "fontSize": "{font.size.lg}",
+            "fontWeight": "{font.weight.bold}",
+            "lineHeight": "{font.lineHeight.relaxed}",
+            "letterSpacing": "{font.letterSpacing.normal}"
+          }
         }
       },
       "md": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{font.family.sans}",
-          "fontSize": "{font.size.base}",
-          "fontWeight": "{font.weight.regular}",
-          "lineHeight": "{font.lineHeight.normal}",
-          "letterSpacing": "{font.letterSpacing.normal}"
+        "regular": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font.family.sans}",
+            "fontSize": "{font.size.base}",
+            "fontWeight": "{font.weight.regular}",
+            "lineHeight": "{font.lineHeight.normal}",
+            "letterSpacing": "{font.letterSpacing.normal}"
+          }
+        },
+        "medium": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font.family.sans}",
+            "fontSize": "{font.size.base}",
+            "fontWeight": "{font.weight.medium}",
+            "lineHeight": "{font.lineHeight.normal}",
+            "letterSpacing": "{font.letterSpacing.normal}"
+          }
+        },
+        "bold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font.family.sans}",
+            "fontSize": "{font.size.base}",
+            "fontWeight": "{font.weight.bold}",
+            "lineHeight": "{font.lineHeight.normal}",
+            "letterSpacing": "{font.letterSpacing.normal}"
+          }
         }
       },
       "sm": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{font.family.sans}",
-          "fontSize": "{font.size.sm}",
-          "fontWeight": "{font.weight.regular}",
-          "lineHeight": "{font.lineHeight.normal}",
-          "letterSpacing": "{font.letterSpacing.normal}"
+        "regular": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font.family.sans}",
+            "fontSize": "{font.size.sm}",
+            "fontWeight": "{font.weight.regular}",
+            "lineHeight": "{font.lineHeight.normal}",
+            "letterSpacing": "{font.letterSpacing.normal}"
+          }
+        },
+        "medium": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font.family.sans}",
+            "fontSize": "{font.size.sm}",
+            "fontWeight": "{font.weight.medium}",
+            "lineHeight": "{font.lineHeight.normal}",
+            "letterSpacing": "{font.letterSpacing.normal}"
+          }
+        },
+        "bold": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font.family.sans}",
+            "fontSize": "{font.size.sm}",
+            "fontWeight": "{font.weight.bold}",
+            "lineHeight": "{font.lineHeight.normal}",
+            "letterSpacing": "{font.letterSpacing.normal}"
+          }
         }
       }
     },
@@ -118,13 +184,25 @@
       }
     },
     "caption": {
-      "$type": "typography",
-      "$value": {
-        "fontFamily": "{font.family.sans}",
-        "fontSize": "{font.size.xs}",
-        "fontWeight": "{font.weight.regular}",
-        "lineHeight": "{font.lineHeight.normal}",
-        "letterSpacing": "{font.letterSpacing.normal}"
+      "regular": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font.family.sans}",
+          "fontSize": "{font.size.xs}",
+          "fontWeight": "{font.weight.regular}",
+          "lineHeight": "{font.lineHeight.normal}",
+          "letterSpacing": "{font.letterSpacing.normal}"
+        }
+      },
+      "medium": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font.family.sans}",
+          "fontSize": "{font.size.xs}",
+          "fontWeight": "{font.weight.medium}",
+          "lineHeight": "{font.lineHeight.normal}",
+          "letterSpacing": "{font.letterSpacing.normal}"
+        }
       }
     },
     "code": {
