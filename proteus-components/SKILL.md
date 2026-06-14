@@ -217,7 +217,7 @@ Known semantic variable IDs (skip re-discovery):
 
 ## Icon library — vector components on the "Icons" page
 
-A **37-icon** vector library exists on its own page (`Icons`, page id `207:2`, wrapper
+A **76-icon** vector library exists on its own page (`Icons`, page id `207:2`, wrapper
 `207:3`): 34 built in v0.1.0 from **Material Symbols Rounded**
 (`fonts.gstatic.com/s/i/.../materialsymbolsrounded/<name>/default/24px.svg`,
 `viewBox="0 -960 960 960"`, single-path SVGs), más 3 agregados después: `tune` y
@@ -268,11 +268,27 @@ calendar_today=208:67 filter_list=208:70 sort=208:73 more_vert=208:76
 expand_more=208:79 chevron_right=208:82 info=208:85 warning=208:88 error=208:91
 check_circle=208:94 help=208:97 logout=208:100 login=208:103 tune=224:4
 done_all=1048:4 google=1102:4
+expand_less=1208:4 open_in_new=1208:7 drag_indicator=1208:10 refresh=1208:13
+content_copy=1208:16 link=1208:19 bookmark=1208:22 archive=1208:25
+attach_file=1208:28 undo=1208:31 redo=1208:34 chevron_left=1208:37
+first_page=1208:40 last_page=1208:43 arrow_upward=1208:46 arrow_downward=1208:49
+schedule=1208:52 pending=1208:55 radio_button_unchecked=1208:58
+indeterminate_check_box=1208:61 circle=1208:64 send=1208:67 reply=1208:70
+comment=1208:73 phone=1208:76 video_call=1208:79 image=1208:82
+folder_open=1208:85 description=1208:88 play_arrow=1208:91 pause=1208:94
+cloud_upload=1208:97 bar_chart=1208:100 trending_up=1208:103
+trending_down=1208:106 pie_chart=1208:109 shopping_cart=1208:112
+credit_card=1208:115 receipt=1208:118
 ```
+
+**Nota `circle` (fill1 — sólido):** a diferencia del resto del set (fill0/outline),
+`circle` usa la variante rellena de Material Symbols para diferenciarse de
+`radio_button_unchecked` (que también es un círculo outline). `circle` sólido es
+útil para dots de estado, indicadores de presencia y badges puntuales.
 
 **`INSTANCE_SWAP` is now unblocked** — Button's `icon` placeholder (a tinted frame,
 flagged in v0.1.0 as "swap to `INSTANCE_SWAP` once an icon library exists") can be
-upgraded to a real `INSTANCE_SWAP` component property defaulting to one of these 37
+upgraded to a real `INSTANCE_SWAP` component property defaulting to one of these 76
 components, `preferredValues` scoped to the set.
 
 **Historial de migración de Iconography** (reemplazo de los 4 demo spots de glifos
