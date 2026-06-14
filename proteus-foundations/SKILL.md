@@ -1,6 +1,6 @@
 ---
 name: proteus-foundations
-version: 1.10.0
+version: 1.11.0
 description: >-
   Build the foundations of the Proteus design system (ProteusDS) in Figma: all
   design tokens — color (dark-first matte, brand indigo, vivid states), typography
@@ -32,7 +32,7 @@ all spacing and box-drawing characters):
 │   └  └─┘└─┘┘└┘─┴┘┴ ┴ ┴ ┴└─┘┘└┘└─┘                  │
 │                                                       │
 │   Design System for ProteusDS  ·  Stage 1/3           │
-│   Tokens · Variables · Styles · Modes       v 1.10.0  │
+│   Tokens · Variables · Styles · Modes       v 1.11.0  │
 │                                                       │
 ╰───────────────────────────────────────────────────────╯
 ```
@@ -332,6 +332,21 @@ frame.setBoundVariable('paddingTop', spaceVar);
 
 `color/success-foreground` / `color/warning-foreground` / `color/error-foreground` NO existen.
 Sufijo `-fg` siempre para foreground de estado.
+
+### `opacity/*` variables no se pueden bindear al `opacity` de un nodo en Figma
+
+`setBoundVariable("opacity", variable)` aparentemente acepta el binding, pero Figma resuelve el valor en escala 0–100 (no 0–1): una variable con valor `0.4` produce opacidad visual `0.4%` en lugar de `40%`. Los tokens de opacidad son **exclusivos para código** — no los bindees a nodos de presentación en Figma.
+
+En las páginas de foundations, los overlays de la sección Opacidad usan valores hardcodeados directamente en la propiedad `node.opacity` (0.4, 0.08, 0.12, 0.6). Eso es correcto por diseño.
+
+### `setBoundVariable("cornerRadius")` expande a las 4 esquinas
+
+Llamar a `node.setBoundVariable("cornerRadius", variable)` vincula la variable con éxito, pero Figma la almacena bajo las claves individuales `topLeftRadius`, `topRightRadius`, `bottomLeftRadius`, `bottomRightRadius` — **no** bajo `cornerRadius`. Al auditar bindings de radio, verificar con:
+
+```javascript
+const bv = node.boundVariables;
+const radiusBound = bv && (bv.cornerRadius || bv.topLeftRadius);
+```
 
 ### Warning wash is near-black in dark mode
 
