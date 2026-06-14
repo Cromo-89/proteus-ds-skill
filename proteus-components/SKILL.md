@@ -1,6 +1,6 @@
 ---
 name: proteus-components
-version: 0.14.0
+version: 0.15.0
 description: >-
   Build component sets for ProteusDS in Figma on top of the foundations
   tokens — variant matrices (Style × Size), component properties (TEXT,
@@ -33,7 +33,7 @@ as shown (preserve all spacing and box-drawing characters):
 │              C O M P O N E N T S                      │
 │                                                       │
 │   Design System for ProteusDS  ·  Stage 2/3           │
-│   Variant Sets · Properties · Pages         v 0.14.0  │
+│   Variant Sets · Properties · Pages         v 0.15.0  │
 │                                                       │
 ╰───────────────────────────────────────────────────────╯
 ```
@@ -67,7 +67,7 @@ Figma file: **`Ohc3OVwwd3MwI4SvIdk3EY`** (Proteus DS).
   `opacity.json`, `elevation.json`, `icon.json`, `motion.json`, `zindex.json`)
 - `icons-svg/` + `icons-svg.json` — los 37 SVG fuente de la librería de íconos
 
-## Component catalog — 52 componentes
+## Component catalog — 54 componentes
 
 → IDs de página, ComponentSets, ejes y properties en **`references/component-catalog.md`**.
 
@@ -649,6 +649,59 @@ inst.x = centerX; inst.y = centerY;
 | Empty State | "Todavía no hay proyectos" | `Illustration/searching` | "Sin resultados" | "Ver tutorial" · "+ Crear proyecto" |
 
 Ambas tarjetas usan `Dialog/Type=Illustration` instanciado con contenido en el slot.
+
+---
+
+### Bottom Sheet — panel deslizable desde el fondo (v0.1.0)
+
+Componente overlay móvil con eje `Size` (SM / MD / LG) y body con `layoutSizingVertical = 'FILL'`.
+
+| Variante | ComponentSet ID | Página ID | Tamaño | Uso típico |
+|---|---|---|---|---|
+| `Size=SM` | `1433:106` | `1433:2` | 480×280 | Acciones rápidas, confirmaciones |
+| `Size=MD` | `1433:106` | `1433:2` | 480×400 | Filtros, formularios cortos |
+| `Size=LG` | `1433:106` | `1433:2` | 480×560 | Selección de listas, contenido extenso |
+
+**Estructura (cada variante):**
+```
+BottomSheet (COMPONENT_SET id:1433:106, Size=SM|MD|LG)
+  — r: topLeft=20 topRight=20 bottomLeft=0 bottomRight=0
+  — fill = color/card  clipsContent = true
+  ├─ handle-area  FRAME 480×28  HORIZONTAL CENTER  fill=transparent
+  │    └─ handle  RECT 40×4  r:2  fill=color/border
+  ├─ header  FRAME 480×56  HORIZONTAL SPACE_BETWEEN  padding:8/16/16/20
+  │    ├─ title       TEXT 14px label/md color/foreground  ("Título del sheet")
+  │    └─ close-btn   FRAME HUG (Icon/close instance 24×24)
+  ├─ divider       RECT 480×1  fill=color/border
+  ├─ body  FRAME VERTICAL  layoutSizingVertical=FILL  padding:20/24/20/24  gap:12
+  │    └─ description  TEXT 13px body/sm/regular color/foreground-muted  FILL-width
+  ├─ divider-footer  RECT 480×1  fill=color/border
+  └─ footer  FRAME 480×67  HORIZONTAL  primaryAxisAlignItems=MAX  padding:16/20/16/20  gap:8
+       ├─ Button Outline  (mainComp 176:20 — Cancel)
+       └─ Button Primary  (mainComp 175:2  — Confirm)
+```
+
+**Component properties (cableadas con `componentPropertyReferences`):**
+
+| Property | Tipo | Default | Nodo wired |
+|---|---|---|---|
+| `Title` (`Title#1433:0`) | TEXT | "Título del sheet" | `header > title` (characters) |
+| `Show Handle` (`Show Handle#1433:4`) | BOOLEAN | true | `handle-area` (visible) |
+| `Show Footer` (`Show Footer#1433:8`) | BOOLEAN | true | `footer` + `divider-footer` (visible) |
+
+**Alturas de body (FILL) en cada variante:**
+
+| Size | Total | Body FILL |
+|---|---|---|
+| SM | 280px | ~128px |
+| MD | 400px | ~248px |
+| LG | 560px | ~408px |
+
+**Notas de construcción:**
+- Radios por esquina (`topLeftRadius` / `topRightRadius` = 20, bottom = 0) — no usar `cornerRadius` global.
+- `primaryAxisSizingMode = 'FIXED'` en el COMPONENT para que el `body` pueda usar `layoutSizingVertical = 'FILL'`.
+- Wrapper de página en 1616px (ancho = 3×480 + 2×40 gaps + 2×48 padding) — excede el estándar 1424px por el layout de 3 variantes lado a lado.
+- Página insertada en el índice 51 de Figma (después de Tooltip, antes del separador `---` de Feedback).
 
 ---
 

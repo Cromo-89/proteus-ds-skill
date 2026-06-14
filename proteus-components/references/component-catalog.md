@@ -12,7 +12,7 @@ Referencia de lookup para `setCurrentPageAsync` y `getNodeByIdAsync`. Archivo Fi
 |---|---|---|
 | **📝 Forms** (separador `1072:2`) | 15 | Checkbox `391:2` · Date Picker `718:2` · File Upload `706:2` · Form Field `739:2` · Input `331:2` · Number Input `711:2` · OTP Input `713:2` · Password Input `955:2` · Phone Input `956:2` · Radio `419:2` · Search `712:2` · Select `628:2` · Slider `705:2` · Switch `432:2` · Textarea `668:2` |
 | **🧭 Navigation** (separador `1072:3`) | 6 | Breadcrumb `696:2` · Navbar `714:2` · Pagination `695:2` · Sidebar `736:2` · Stepper `715:2` · Tabs `726:2` |
-| **🪟 Overlays** (separador `1072:4`) | 8 | Command Palette `724:2` · Context Menu `716:2` · Dialog `640:2` · Dropdown Menu `612:2` · Notification Center `747:2` · Popover `597:2` · Toast `681:2` · Tooltip `546:2` |
+| **🪟 Overlays** (separador `1072:4`) | 10 | Bottom Sheet `1433:2` · Command Palette `724:2` · Context Menu `716:2` · Dialog `640:2` · Drawer `1201:2` · Dropdown Menu `612:2` · Notification Center `747:2` · Popover `597:2` · Toast `681:2` · Tooltip `546:2` |
 | **🔔 Feedback** (separador `1072:5`) | 6 | Alert `496:19` · Banner `704:2` · Empty State `697:2` · Progress `677:2` · Progress Bar `728:2` · Skeleton `678:2` |
 | **🖼️ Display** (separador `1072:6`) | 17 | Accordion `533:2` · Avatar `464:2` · Avatar Group `732:2` · Badge `311:2` · Button `166:2` · Card `444:2` · Chat Message `755:2` · Chip `710:2` · Divider `744:2` · Feature Card `763:2` · Label `265:2` · List Item `707:2` · Rating `729:2` · Stat Card `708:2` · Table `644:2` · Timeline `727:2` · Toggle Group `733:2` |
 
@@ -42,6 +42,7 @@ Los 19 formales de Stage 2 están detallados en `references/learnings.md`. Esta 
 | Sidebar | `Item` `905:80` · `SubItem` `906:60` · `Sidebar` `909:133` | Item: Type Link/Section/Separator × HasSubItems × State ×4 (10 var.) · SubItem: State ×4 · Sidebar: Expanded/Collapsed | — |
 | Stepper | `Step` `715:17` | State Pending/Active/Completed | Number · Label |
 | Tabs (rebuild) | `Tab / Item` `881:23` | Type Pill/Underline × State ×4 | — |
+| Bottom Sheet | `1433:106` | Size SM/MD/LG | Title · Show Handle (BOOL) · Show Footer (BOOL) |
 | Command Palette | `Result` `724:15` | Type Item/Section × State Default/Hover (3 var.) | — |
 | Context Menu | `Item` `716:42` | Type Default/Danger/Disabled/Separator/Submenu × State ×2 (8 var.) | Label · Shortcut |
 | Notification Center | `Notification / Item` `747:18` | State Unread/Read | — |

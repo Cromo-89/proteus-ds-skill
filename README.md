@@ -6,7 +6,7 @@ Skill para Claude Code del sistema de diseño Proteus — contiene foundations y
 
 ```
 proteus-foundations/    skill v1.11.0 — tokens, variables y referencias de foundations
-proteus-components/     skill v0.14.0 — componentes, íconos y patrones de construcción
+proteus-components/     skill v0.15.0 — componentes, íconos y patrones de construcción
 ```
 
 ## Uso
