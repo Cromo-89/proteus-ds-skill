@@ -618,14 +618,16 @@ El componente `Dialog` pasó de COMPONENT único a **ComponentSet** con eje `Typ
 **Estructura de `Type=Illustration`:**
 ```
 Dialog (COMPONENT_SET id:1415:88, Type=Default|Illustration)
-  └─ Type=Illustration (COMPONENT id:1415:29, VERTICAL AUTO, r:12, clipsContent:true)
-       ├─ illustration  FRAME 480×200  clipsContent:true  topRadius:12
-       │    └─ [slot]   INSTANCE_SWAP → Illustration/no_found (default)
-       ├─ header        FRAME 480×64  (título + close-btn)
+  ├─ Type=Default     (COMPONENT id:640:10,  VERTICAL AUTO, r:12) — 480×213
+  └─ Type=Illustration (COMPONENT id:1415:29, VERTICAL AUTO, r:12) — 480×405
+       ├─ header        FRAME 480×64   (título + close-btn)
        ├─ divider       RECT 480×1
-       ├─ body          FRAME 480×80  (descripción)
+       ├─ body          FRAME 480 AUTO  padding:20/24/20/24  gap:12
+       │    ├─ illustration  FRAME FILL×180  clipsContent:true  r:8
+       │    │    └─ [slot]   INSTANCE_SWAP → Illustration/no_found (default)
+       │    └─ description   TEXT FILL
        ├─ divider-footer RECT 480×1
-       └─ footer        FRAME 480×67  (2 botones)
+       └─ footer        FRAME 480×67   (2 botones)
 ```
 
 **Component properties expuestas:**
