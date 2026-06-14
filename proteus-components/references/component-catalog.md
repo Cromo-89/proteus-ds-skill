@@ -42,7 +42,7 @@ Los 19 formales de Stage 2 están detallados en `references/learnings.md`. Esta 
 | Sidebar | `Item` `905:80` · `SubItem` `906:60` · `Sidebar` `909:133` | Item: Type Link/Section/Separator × HasSubItems × State ×4 (10 var.) · SubItem: State ×4 · Sidebar: Expanded/Collapsed | — |
 | Stepper | `Step` `715:17` | State Pending/Active/Completed | Number · Label |
 | Tabs (rebuild) | `Tab / Item` `881:23` | Type Pill/Underline × State ×4 | — |
-| Bottom Sheet | `1433:106` | Size SM/MD/LG | Title · Show Handle (BOOL) · Show Footer (BOOL) |
+| Bottom Sheet | `1434:156` | Type Text/Slot | Title · Show Handle (BOOL) · Show Footer (BOOL) |
 | Command Palette | `Result` `724:15` | Type Item/Section × State Default/Hover (3 var.) | — |
 | Context Menu | `Item` `716:42` | Type Default/Danger/Disabled/Separator/Submenu × State ×2 (8 var.) | Label · Shortcut |
 | Notification Center | `Notification / Item` `747:18` | State Unread/Read | — |

@@ -652,56 +652,54 @@ Ambas tarjetas usan `Dialog/Type=Illustration` instanciado con contenido en el s
 
 ---
 
-### Bottom Sheet — panel deslizable desde el fondo (v0.1.0)
+### Bottom Sheet — panel deslizable desde el fondo (v0.2.0)
 
-Componente overlay móvil con eje `Size` (SM / MD / LG) y body con `layoutSizingVertical = 'FILL'`.
+Componente overlay móvil con eje `Type` (Text / Slot). Sin eje de tamaño — el body crece con el contenido; el diseñador es responsable de no superar el 80 % del viewport móvil (~675 px en iPhone 14, 844 px total).
 
 | Variante | ComponentSet ID | Página ID | Tamaño | Uso típico |
 |---|---|---|---|---|
-| `Size=SM` | `1433:106` | `1433:2` | 480×280 | Acciones rápidas, confirmaciones |
-| `Size=MD` | `1433:106` | `1433:2` | 480×400 | Filtros, formularios cortos |
-| `Size=LG` | `1433:106` | `1433:2` | 480×560 | Selección de listas, contenido extenso |
+| `Type=Text` | `1434:156` | `1433:2` | 480×256 (AUTO) | Confirmaciones, info contextual con texto |
+| `Type=Slot` | `1434:156` | `1433:2` | 480×373 (body 220px fijo) | Empty states, ilustraciones, contenido rich |
 
-**Estructura (cada variante):**
+**Estructura:**
 ```
-BottomSheet (COMPONENT_SET id:1433:106, Size=SM|MD|LG)
-  — r: topLeft=20 topRight=20 bottomLeft=0 bottomRight=0
+BottomSheet (COMPONENT_SET id:1434:156, Type=Text|Slot)
+  — primaryAxisSizingMode=AUTO  r: topLeft=20 topRight=20 bottom=0
   — fill = color/card  clipsContent = true
-  ├─ handle-area  FRAME 480×28  HORIZONTAL CENTER  fill=transparent
+
+  ├─ handle-area  FRAME 480×28  HORIZONTAL CENTER  fill=transparent  [FIXED]
   │    └─ handle  RECT 40×4  r:2  fill=color/border
-  ├─ header  FRAME 480×56  HORIZONTAL SPACE_BETWEEN  padding:8/16/16/20
-  │    ├─ title       TEXT 14px label/md color/foreground  ("Título del sheet")
-  │    └─ close-btn   FRAME HUG (Icon/close instance 24×24)
-  ├─ divider       RECT 480×1  fill=color/border
-  ├─ body  FRAME VERTICAL  layoutSizingVertical=FILL  padding:20/24/20/24  gap:12
+  ├─ header  FRAME 480×56  HORIZONTAL SPACE_BETWEEN  padding:8/16/16/20  [FIXED]
+  │    ├─ title   TEXT 14px label/md color/foreground
+  │    └─ close-btn  FRAME HUG (Icon/close instance 24×24)
+  ├─ divider  RECT 480×1  fill=color/border  [FIXED]
+  │
+  ├─ [Type=Text] body  FRAME VERTICAL  AUTO  padding:20/24/20/24  gap:12  [HUG]
   │    └─ description  TEXT 13px body/sm/regular color/foreground-muted  FILL-width
-  ├─ divider-footer  RECT 480×1  fill=color/border
-  └─ footer  FRAME 480×67  HORIZONTAL  primaryAxisAlignItems=MAX  padding:16/20/16/20  gap:8
+  │
+  ├─ [Type=Slot] "Empty State"  FRAME 480×220  VERTICAL FIXED  [FIXED]
+  │    → placeholder a convertir a SLOT nativo en Figma UI (igual que Dialog)
+  │    node id: 1434:137
+  │
+  ├─ divider-footer  RECT 480×1  fill=color/border  [FIXED]
+  └─ footer  FRAME 480×67  HORIZONTAL MAX  padding:16/20/16/20  gap:8  [FIXED]
        ├─ Button Outline  (mainComp 176:20 — Cancel)
        └─ Button Primary  (mainComp 175:2  — Confirm)
 ```
 
-**Component properties (cableadas con `componentPropertyReferences`):**
+**Component properties (cableadas):**
 
-| Property | Tipo | Default | Nodo wired |
+| Property | Key | Tipo | Nodo wired |
 |---|---|---|---|
-| `Title` (`Title#1433:0`) | TEXT | "Título del sheet" | `header > title` (characters) |
-| `Show Handle` (`Show Handle#1433:4`) | BOOLEAN | true | `handle-area` (visible) |
-| `Show Footer` (`Show Footer#1433:8`) | BOOLEAN | true | `footer` + `divider-footer` (visible) |
-
-**Alturas de body (FILL) en cada variante:**
-
-| Size | Total | Body FILL |
-|---|---|---|
-| SM | 280px | ~128px |
-| MD | 400px | ~248px |
-| LG | 560px | ~408px |
+| Title | `Title#1434:0` | TEXT | `header > title` (characters) |
+| Show Handle | `Show Handle#1434:3` | BOOLEAN | `handle-area` (visible) |
+| Show Footer | `Show Footer#1434:6` | BOOLEAN | `footer` + `divider-footer` (visible) |
 
 **Notas de construcción:**
-- Radios por esquina (`topLeftRadius` / `topRightRadius` = 20, bottom = 0) — no usar `cornerRadius` global.
-- `primaryAxisSizingMode = 'FIXED'` en el COMPONENT para que el `body` pueda usar `layoutSizingVertical = 'FILL'`.
-- Wrapper de página en 1616px (ancho = 3×480 + 2×40 gaps + 2×48 padding) — excede el estándar 1424px por el layout de 3 variantes lado a lado.
-- Página insertada en el índice 51 de Figma (después de Tooltip, antes del separador `---` de Feedback).
+- Componente VERTICAL `primaryAxisSizingMode='AUTO'` — el body en Type=Text usa `layoutSizingVertical='HUG'` (válido porque body es un frame de auto-layout). El footer y header son `layoutSizingVertical='FIXED'`.
+- Type=Slot: el frame "Empty State" (`1434:137`) debe convertirse a SLOT nativo en Figma UI (mismo patrón que `Dialog/Type=Illustration` — el usuario lo hizo manualmente).
+- Radios por esquina: `topLeftRadius = topRightRadius = 20`, `bottomLeft = bottomRight = 0`.
+- Wrapper de página: estándar 1424px (2 variantes de 480px caben con holgura).
 
 ---
 
