@@ -1,6 +1,6 @@
 ---
 name: proteus-components
-version: 0.12.0
+version: 0.13.0
 description: >-
   Build component sets for ProteusDS in Figma on top of the foundations
   tokens — variant matrices (Style × Size), component properties (TEXT,
@@ -33,7 +33,7 @@ as shown (preserve all spacing and box-drawing characters):
 │              C O M P O N E N T S                      │
 │                                                       │
 │   Design System for ProteusDS  ·  Stage 2/3           │
-│   Variant Sets · Properties · Pages         v 0.12.0  │
+│   Variant Sets · Properties · Pages         v 0.13.0  │
 │                                                       │
 ╰───────────────────────────────────────────────────────╯
 ```
@@ -120,7 +120,7 @@ Todos los cambios de una versión van en **un solo commit** — no commits parci
   `brand` = Indigo (hue 284°), spacing, radius, etc.
 - **`Semantic`** collection (`VariableCollectionId:15:2`, modes Dark = `15:0` / Light = `15:1`)
   — ~40 tokens, all aliases to primitives. **Dark is the primary/default mode.**
-- 13 Text Styles (Inter + JetBrains Mono) + 5 Effect Styles (elevation).
+- 20 Text Styles (Inter + JetBrains Mono, incl. weight variants body/caption) + 5 Effect Styles (elevation).
 - 9 presentation pages incl. Accessibility — all validated in Light/Dark + WCAG AA.
 
 Brand: indigo `#5649B7`. Dark → `primary = brand.700`, `primary-hover = brand.600`,
@@ -570,6 +570,39 @@ Extiende [componente base] con [diferenciadores concretos].
 
 Si el componente no extiende uno existente, el segundo bloque describe su rol en el
 sistema: *"Úsalo para [caso de uso]. Es el único componente del DS que [valor único]."*
+
+## Auditoría de token-binding — resultado (2026-06-14)
+
+Realizada sobre las 52 páginas de componentes + 5 templates del mismo archivo Figma.
+Metodología: filtrar texto **standalone** (sin ancestro `INSTANCE`) y verificar `textStyleId`.
+Los textos dentro de instancias heredan el estilo del maestro — son falsos positivos en auditoría directa.
+
+**Resultado:**
+- **Fills**: ✅ 100% bound en todas las páginas.
+- **Radius**: ✅ OK — los "unbound" en templates son instancias (herencia correcta del maestro).
+- **Text styles**: ❌ → ✅ **331 nodos** corregidos en 25 páginas de componentes + 4 templates.
+
+**Patrón del problema**: textos standalone de presentación (etiquetas de eje "Small"/"Medium",
+títulos de sección "Variants ·", demo labels "Demo — X") y contenido de componentes como
+`"••••••••"` en PasswordInput no tenían `textStyleId`.
+
+**Mapping size → style aplicado:**
+```
+fs ≤ 12 → text/label/sm     |  fs:13 → text/body/sm/regular  |  fs:14 → text/label/md
+fs:15   → text/body/sm/medium |  fs:16 → text/body/md/regular  |  fs:18 → text/heading/sm
+fs:22-25 → text/heading/lg   |  fs:26-33 → text/heading/xl    |  fs ≥ 34 → text/display
+```
+Para contenido de componentes (PasswordInput/PhoneInput): `fs:12 → caption/regular`,
+`fs:14 → body/sm/regular`, `fs:16 → body/md/regular`, `fs:18 → body/lg/regular`.
+
+**Auth template**: 3 frames standalone sin binding de radio → corregido con
+`radius/xl` (16px), `radius/base` (10px), `radius/md` (8px).
+
+**Regla para componentes futuros**: aplicar `textStyleId` a TODOS los textos
+standalone antes de cerrar el componente — etiquetas de eje, demo labels, y
+cualquier texto que no sea hijo de una INSTANCE.
+
+---
 
 ## Registro histórico
 
