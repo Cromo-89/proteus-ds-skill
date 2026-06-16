@@ -1,10 +1,11 @@
 {
   "skillName": "proteus-code",
-  "version": "0.1.0",
+  "version": "0.11.0",
   "figmaFileKey": "Ohc3OVwwd3MwI4SvIdk3EY",
-  "framework": "next.js@15",
-  "ui": "shadcn",
+  "framework": "next.js@16",
+  "ui": "base-ui",
   "styling": "tailwind-v4",
   "language": "typescript",
-  "docsFormat": "mdx"
+  "docsFormat": "tsx",
+  "icons": "material-symbols-rounded"
 }

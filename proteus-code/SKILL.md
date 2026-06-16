@@ -1,15 +1,15 @@
 ---
 name: proteus-code
-version: 0.1.0
+version: 0.11.0
 description: >-
   Generate React/TypeScript component code and a documentation website for
-  ProteusDS, built on Next.js 15 + shadcn/ui + Tailwind CSS v4. Third and
+  ProteusDS, built on Next.js 16 + Base UI + Tailwind CSS v4. Third and
   final stage of the Proteus pipeline — every component maps to a Figma source
   from proteus-components and inherits design tokens from proteus-foundations.
-  Use this skill for any code output task: component implementation, MDX docs
-  pages, theming setup, shadcn/ui extension, and building the documentation
-  site (Storybook-style). Do NOT design tokens here (proteus-foundations) and
-  do NOT build Figma components here (proteus-components).
+  Use this skill for any code output task: component implementation, RSC docs
+  pages, theming setup, and building the documentation site. Icons via Material
+  Icons Rounded. Do NOT design tokens here (proteus-foundations) and do NOT
+  build Figma components here (proteus-components).
 ---
 
 ## On load
@@ -28,7 +28,7 @@ as shown (preserve all spacing and box-drawing characters):
 │              C  O  D  E                               │
 │                                                       │
 │   Design System for ProteusDS  ·  Stage 3/3           │
-│   Next.js · shadcn/ui · Tailwind · Docs      v 0.1.0  │
+│   Next.js · Base UI · Tailwind · Docs       v 0.11.0  │
 │                                                       │
 ╰───────────────────────────────────────────────────────╯
 ```
@@ -43,11 +43,12 @@ Third and final stage of the Proteus DS pipeline:
 
 ```
 1. proteus-foundations  ✅ COMPLETE  → tokens, variables, styles, Light/Dark
-2. proteus-components   ✅ COMPLETE  → 54 component sets in Figma
-3. proteus-code         ⬅️ HERE      → React/TS library + documentation site
+2. proteus-components   ✅ COMPLETE  → 68 component sets in Figma
+3. proteus-code         ✅ COMPLETE  → React/TS library + documentation site (live)
 ```
 
 Figma file: **`Ohc3OVwwd3MwI4SvIdk3EY`** (Proteus DS).
+Production URL: **`https://proteus-ds-web.vercel.app`**
 
 ## Skill files
 
@@ -55,71 +56,121 @@ Figma file: **`Ohc3OVwwd3MwI4SvIdk3EY`** (Proteus DS).
 - `config.json` — configuración (framework, version)
 - `references/site-architecture.md` — estructura del sitio de documentación
 - `references/component-api.md` — TypeScript interfaces y ejemplos de uso
-- `references/token-css-vars.md` — CSS variables completas (globals.css + tailwind.config)
-- `references/shadcn-mapping.md` — mapa Proteus component → shadcn/ui primitive
+- `references/token-css-vars.md` — CSS variables completas (globals.css)
+- `references/shadcn-mapping.md` — mapa Proteus component → Base UI primitive
 - `references/learnings.md` — decisiones, bugs y validaciones de implementación
 
 ## Tech stack
 
 | Layer | Technology | Versión |
 |---|---|---|
-| Framework | Next.js App Router | 15.x |
+| Framework | Next.js App Router | 16.2.9 |
 | Lenguaje | TypeScript strict | 5.x |
-| Styling | Tailwind CSS + `@theme inline` | 4.x |
-| Component primitives | shadcn/ui (Radix UI) | latest |
+| Styling | Tailwind CSS v4 (`@import "tailwindcss"`) | 4.x |
+| Component primitives | Base UI (`@base-ui/react`) | latest |
 | Variant helper | class-variance-authority (CVA) | latest |
 | Merge helper | tailwind-merge + clsx | latest |
-| Íconos | Lucide React | latest |
-| Docs format | MDX | 3.x |
+| Íconos | Material Icons Rounded (Google font CDN) | — |
+| Docs format | Static RSC pages (TSX) + Shiki highlight | — |
 | Syntax highlight | Shiki | latest |
-| Package manager | pnpm | latest |
+| Package manager | npm | latest |
+| Deploy | Vercel (Git-integrated) | — |
+
+**Lo que NO usa este proyecto:**
+- ❌ Lucide React — eliminado por completo; **siempre Material Icons Rounded**
+- ❌ Radix UI — reemplazado por Base UI (`@base-ui/react`)
+- ❌ MDX / next-mdx-remote — docs son RSC `.tsx` puras
+- ❌ lib/registry.ts — navegación vive en `lib/navigation.ts`
+- ❌ content/ MDX dir — no existe
+- ❌ pnpm — el proyecto usa npm
+- ❌ Storybook — el sitio de docs ES el Storybook
 
 ## Project structure
 
 ```
 proteus-ds-web/
 ├── app/
-│   ├── layout.tsx                 ← root layout (fuentes, ThemeProvider)
+│   ├── layout.tsx                 ← root layout (DM Sans, ThemeProvider, Material Icons CDN)
+│   ├── globals.css                ← CSS variables dark/light + @import "tailwindcss"
 │   ├── page.tsx                   ← home / landing del DS
 │   ├── (docs)/
-│   │   ├── layout.tsx             ← docs layout (sidebar + content)
+│   │   ├── layout.tsx             ← docs layout (sidebar + content area)
 │   │   ├── foundations/
 │   │   │   ├── colors/page.tsx
 │   │   │   ├── typography/page.tsx
 │   │   │   ├── spacing/page.tsx
 │   │   │   ├── icons/page.tsx
-│   │   │   └── elevation/page.tsx
+│   │   │   ├── elevation/page.tsx
+│   │   │   ├── radius/page.tsx
+│   │   │   └── motion/page.tsx
 │   │   └── components/
-│   │       └── [slug]/page.tsx    ← página dinámica por componente
+│   │       ├── accordion/page.tsx
+│   │       ├── alert/page.tsx
+│   │       └── ...               ← 68 componentes, cada uno en su carpeta
 ├── components/
-│   ├── ui/                        ← shadcn/ui generados (no editar directamente)
+│   ├── ui/                        ← Base UI components (shadcn pattern)
+│   │   ├── icon.tsx               ← componente Icon central (Material Icons Rounded)
+│   │   ├── button.tsx
+│   │   └── ...                   ← un archivo por componente
 │   └── docs/                      ← componentes del sitio de documentación
-│       ├── ComponentPreview.tsx   ← wrapper live preview + code tab
-│       ├── PropsTable.tsx         ← tabla de props desde tipos TS
-│       ├── CodeBlock.tsx          ← bloque de código con Shiki
-│       ├── Sidebar.tsx            ← navegación lateral del docs
-│       └── ThemeToggle.tsx        ← toggle Light/Dark
-├── content/
-│   └── components/                ← MDX por componente
-│       ├── button.mdx
-│       ├── input.mdx
-│       └── ...                    ← uno por cada uno de los 54 componentes
+│       ├── component-preview.tsx  ← wrapper live preview + bloque de código
+│       ├── props-table.tsx        ← tabla de props con tipos TS
+│       ├── topbar.tsx             ← barra superior con logo y toggle dark/light
+│       └── sidebar.tsx            ← navegación lateral (consume navigation.ts)
 ├── lib/
 │   ├── utils.ts                   ← cn() helper (clsx + tailwind-merge)
-│   ├── registry.ts                ← registro de todos los componentes y metadatos
-│   └── tokens.ts                  ← constantes JS derivadas de los tokens
-└── styles/
-    └── globals.css                ← CSS variables (dark/light) + @theme inline
+│   ├── navigation.ts              ← estructura de navegación del sidebar (array de grupos)
+│   └── highlight.ts               ← función async highlight(code) con Shiki
+└── public/
 ```
 
-## The one hard rule for this tier
+## Hard rules
+
+### 1. Sin valores literales de color
 
 > **Nunca valores literales de color, espaciado o tipografía. Solo CSS variables.**
-> `bg-[var(--primary)]` o `bg-primary` vía Tailwind mapping — nunca `bg-indigo-600`.
+> `bg-primary` o `text-foreground` vía Tailwind mapping — nunca `bg-indigo-600`.
 
 Cada fill, stroke, radio y tipografía en código se mapea a una CSS variable de la tabla
-en `references/token-css-vars.md`. Si estás por escribir un valor numérico fuera de un
-`var()` o una clase Tailwind definida en el theme, detenete.
+en `references/token-css-vars.md`. Si estás por escribir un valor numérico de color
+fuera de un `var()` o una clase Tailwind del tema, detenete.
+
+### 2. Íconos siempre Material Icons Rounded
+
+```tsx
+// ✅ CORRECTO — siempre usar el componente Icon
+import { Icon } from "@/components/ui/icon"
+<Icon name="check_circle" size={16} />
+
+// ❌ NUNCA — Lucide React no existe en este proyecto
+import { CheckCircle } from "lucide-react"
+```
+
+El componente `Icon` renderiza `<span className="material-symbols-rounded leading-none">` con
+`fontSize: size` como estilo inline. Tamaños válidos: `14 | 16 | 20 | 24 | 40 | 48`.
+
+### 3. Focus ring estándar DS
+
+Todo elemento interactivo usa:
+```
+focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:border-ring
+```
+
+### 4. Disabled estándar DS
+
+```
+disabled:opacity-50 disabled:cursor-not-allowed
+```
+Para primitivos Base UI que usan `data-disabled` en lugar de el atributo HTML:
+```
+data-disabled:opacity-50 data-disabled:pointer-events-none
+```
+
+### 5. Error/invalid estándar DS
+
+```
+aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20
+```
 
 ## Naming conventions
 
@@ -129,146 +180,200 @@ en `references/token-css-vars.md`. Si estás por escribir un valor numérico fue
 | Componentes React | PascalCase | `Button`, `FormField` |
 | Props interface | `{Component}Props` | `ButtonProps` |
 | CSS class helper | CVA `cva()` | `const buttonVariants = cva(...)` |
-| Slot/children | `children?: React.ReactNode` | — |
-| Refs | `React.forwardRef<HTMLElement, Props>` | siempre forwardRef |
+| Slot attribute | `data-slot="..."` en root element | `data-slot="button"` |
 | Tests | `{Component}.test.tsx` | `button.test.tsx` |
-| Stories MDX | `{component}.mdx` en `content/components/` | `button.mdx` |
+| Docs page | `app/(docs)/components/{name}/page.tsx` | `app/(docs)/components/button/page.tsx` |
+
+**Sin `React.forwardRef`** — los componentes son funciones simples. Base UI maneja refs internamente en sus primitivos. Los componentes custom no necesitan forwardRef.
 
 ## Component implementation pattern
 
-Todo componente de Proteus DS sigue este patrón:
+### 1. Estructura base (componente custom sin primitivo Base UI)
 
-### 1. Shadcn base
-```bash
-# Instalar el primitivo shadcn/ui correspondiente
-npx shadcn@latest add button
-```
-
-### 2. Extender con variantes Proteus
 ```tsx
-// components/ui/button.tsx — generado por shadcn, extendido con variantes Proteus
+// components/ui/badge.tsx
+import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
-// Variantes Proteus: Primary, Secondary, Outline, Ghost, Destructive
-// Tamaños Proteus: sm, md (default), lg
-const buttonVariants = cva(
-  // base: tokens de CSS variables, nunca valores literales
-  "inline-flex items-center gap-2 rounded-[var(--radius-md)] font-medium transition-colors",
+const badgeVariants = cva(
+  "inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium transition-colors",
   {
     variants: {
       variant: {
-        primary:     "bg-primary text-primary-foreground hover:bg-primary/90",
-        secondary:   "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        outline:     "border border-border bg-transparent hover:bg-muted/50",
-        ghost:       "hover:bg-muted/50 text-foreground",
+        default:     "bg-primary text-primary-foreground",
+        secondary:   "bg-secondary text-secondary-foreground",
+        outline:     "border border-border text-foreground",
         destructive: "bg-destructive text-destructive-foreground",
-      },
-      size: {
-        sm: "h-8 px-3 text-xs",
-        md: "h-9 px-4 text-sm",
-        lg: "h-11 px-6 text-base",
+        success:     "bg-success-bg text-success",
+        warning:     "bg-warning-bg text-warning",
+        info:        "bg-info-bg text-info",
       },
     },
-    defaultVariants: { variant: "primary", size: "md" },
+    defaultVariants: { variant: "default" },
   }
 )
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  isLoading?: boolean
-  leftIcon?: React.ReactNode
-  rightIcon?: React.ReactNode
-}
+export interface BadgeProps
+  extends React.HTMLAttributes<HTMLSpanElement>,
+    VariantProps<typeof badgeVariants> {}
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, isLoading, leftIcon, rightIcon, children, ...props }, ref) => (
-    <button
-      ref={ref}
-      className={cn(buttonVariants({ variant, size }), className)}
-      disabled={isLoading || props.disabled}
+export function Badge({ className, variant, ...props }: BadgeProps) {
+  return (
+    <span
+      data-slot="badge"
+      className={cn(badgeVariants({ variant }), className)}
+      {...props}
+    />
+  )
+}
+```
+
+### 2. Con primitivo Base UI
+
+```tsx
+// components/ui/select.tsx — Base UI primitivo
+"use client"
+
+import * as React from "react"
+import { Select as SelectPrimitive } from "@base-ui/react/select"
+import { cn } from "@/lib/utils"
+import { Icon } from "@/components/ui/icon"
+
+const Select = SelectPrimitive.Root
+
+function SelectTrigger({ className, children, ...props }: SelectPrimitive.Trigger.Props) {
+  return (
+    <SelectPrimitive.Trigger
+      data-slot="select-trigger"
+      className={cn(
+        "flex w-fit items-center gap-1.5 rounded-lg border border-input bg-transparent py-2 px-2.5 text-sm",
+        "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
+        "disabled:cursor-not-allowed disabled:opacity-50",
+        className
+      )}
       {...props}
     >
-      {leftIcon && <span className="shrink-0">{leftIcon}</span>}
-      {isLoading ? <Spinner className="size-4" /> : children}
-      {rightIcon && <span className="shrink-0">{rightIcon}</span>}
-    </button>
+      {children}
+      <SelectPrimitive.Icon
+        render={<Icon name="keyboard_arrow_down" size={16} className="pointer-events-none text-muted-foreground shrink-0" />}
+      />
+    </SelectPrimitive.Trigger>
   )
-)
-Button.displayName = "Button"
+}
+
+function SelectItem({ className, children, ...props }: SelectPrimitive.Item.Props) {
+  return (
+    <SelectPrimitive.Item
+      data-slot="select-item"
+      className={cn(
+        "relative flex w-full cursor-default items-center gap-1.5 rounded-lg py-1.5 pr-8 pl-1.5 text-sm",
+        "focus:bg-accent data-disabled:opacity-50 data-disabled:pointer-events-none",
+        className
+      )}
+      {...props}
+    >
+      <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+      <SelectPrimitive.ItemIndicator
+        render={<span className="absolute right-2 flex size-4 items-center justify-center" />}
+      >
+        <Icon name="check" size={14} />
+      </SelectPrimitive.ItemIndicator>
+    </SelectPrimitive.Item>
+  )
+}
 ```
 
-### 3. Props map desde Figma
+### 3. Íconos — patrón accordion (rotación vs dos íconos)
 
-Cada prop de Figma ComponentSet se traduce a prop de React:
+Para expandir/colapsar: usar **un solo ícono que rota**, no dos íconos hidden/shown:
 
-| Tipo Figma | Tipo TypeScript | Ejemplo |
-|---|---|---|
-| TEXT | `string` | `label: string` |
-| BOOLEAN | `boolean` | `showIcon?: boolean` |
-| INSTANCE_SWAP | `React.ReactNode` | `icon?: React.ReactNode` |
-| Variante (eje) | `"val1" \| "val2"` | `variant: "primary" \| "outline"` |
-
-### 4. Barrel export
-
-```ts
-// components/ui/index.ts — exportar todo desde aquí
-export { Button, type ButtonProps, buttonVariants } from "./button"
-export { Input, type InputProps } from "./input"
-// ... un export por componente
+```tsx
+<Icon
+  name="expand_more"
+  size={16}
+  className="pointer-events-none shrink-0 transition-transform duration-200
+             group-aria-expanded/accordion-trigger:rotate-180"
+/>
 ```
+
+### 4. Docs page — plantilla estándar (RSC, async)
+
+```tsx
+// app/(docs)/components/button/page.tsx
+import type { Metadata } from "next"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Icon } from "@/components/ui/icon"
+import { ComponentPreview } from "@/components/docs/component-preview"
+import { PropsTable } from "@/components/docs/props-table"
+import { highlight } from "@/lib/highlight"
+
+export const metadata: Metadata = { title: "Button" }
+
+const defaultCode = `<Button>Acción</Button>`
+
+export default async function ButtonPage() {
+  const defaultHtml = await highlight(defaultCode)
+
+  return (
+    <article className="space-y-10">
+      <div className="space-y-4">
+        <div className="flex items-center gap-2">
+          <Badge className="bg-success-bg text-success border-transparent rounded-full">Stable</Badge>
+          <a
+            href="https://www.figma.com/design/Ohc3OVwwd3MwI4SvIdk3EY"
+            target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
+          >
+            <Icon name="open_in_new" size={14} />
+            Ver en Figma
+          </a>
+        </div>
+        <div>
+          <h1 className="text-4xl font-bold tracking-tight">Button</h1>
+          <p className="mt-3 text-lg text-muted-foreground leading-relaxed">
+            Acción principal de la interfaz.
+          </p>
+        </div>
+      </div>
+
+      <section className="space-y-3">
+        <h2 className="text-xl font-semibold tracking-tight">Default</h2>
+        <ComponentPreview
+          preview={<Button>Acción</Button>}
+          codeHtml={defaultHtml}
+          code={defaultCode}
+        />
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="text-xl font-semibold tracking-tight">Props</h2>
+        <PropsTable props={[
+          { name: "variant", type: '"default" | "secondary" | "outline" | "ghost" | "destructive"', defaultValue: '"default"', description: "Estilo visual del botón." },
+          { name: "size", type: '"default" | "sm" | "lg" | "icon"', defaultValue: '"default"', description: "Tamaño del botón." },
+        ]} />
+      </section>
+    </article>
+  )
+}
+```
+
+**Claves del patrón de docs:**
+- La función es `async` — necesita `await highlight(code)` para Shiki
+- `code` es la string del snippet (aparece en el tab "Code")
+- `codeHtml` es el HTML ya coloreado que devuelve `highlight()`
+- `preview` es el JSX en vivo que se muestra en el tab "Preview"
+- Cada sección tiene `<h2>` + `<ComponentPreview>` o `<PropsTable>`
 
 ## Documentation site workflow — un componente a la vez
 
-Para cada componente, en orden:
+Para cada componente nuevo:
 
 1. **Implementar** el componente en `components/ui/<name>.tsx`
-2. **Escribir la página MDX** en `content/components/<name>.mdx`
-3. **Agregar al registro** en `lib/registry.ts`
-4. **Agregar a la sidebar** en `components/docs/Sidebar.tsx`
-5. **Validar**: live preview funciona, props table correcta, código copiable
-
-## MDX docs page — plantilla estándar
-
-```mdx
----
-title: Button
-description: Acción principal de la interfaz. Soporta variantes, tamaños e íconos.
-figma: https://figma.com/design/Ohc3OVwwd3MwI4SvIdk3EY?node-id=166:2
----
-
-<ComponentPreview name="button-default">
-  <Button>Acción</Button>
-</ComponentPreview>
-
-## Instalación
-
-```bash
-npx shadcn@latest add button
-```
-
-## Variantes
-
-<ComponentPreview name="button-variants">
-  <div className="flex gap-2 flex-wrap">
-    <Button variant="primary">Primary</Button>
-    <Button variant="secondary">Secondary</Button>
-    <Button variant="outline">Outline</Button>
-    <Button variant="ghost">Ghost</Button>
-    <Button variant="destructive">Destructive</Button>
-  </div>
-</ComponentPreview>
-
-## Props
-
-<PropsTable component="Button" />
-
-## Accesibilidad
-
-- Usa el elemento `<button>` nativo — hereda `role="button"`, focus, y teclado.
-- `isLoading` deshabilita el botón y debe tener `aria-busy="true"`.
-```
+2. **Crear la página docs** en `app/(docs)/components/<name>/page.tsx`
+3. **Agregar a la navegación** en `lib/navigation.ts`
+4. **Validar**: live preview funciona, props table correcta, código copiable
 
 ## Version bump — checklist obligatorio
 
@@ -301,20 +406,21 @@ Semantic variable IDs conocidos (skip re-discovery):
 - `color/border` = `VariableID:15:26` → `--border`
 
 → CSS variables completas en `references/token-css-vars.md`.
-→ Mapping Proteus → shadcn en `references/shadcn-mapping.md`.
+→ Mapping Proteus → Base UI en `references/shadcn-mapping.md`.
 → API por componente en `references/component-api.md`.
 → Arquitectura del sitio en `references/site-architecture.md`.
 
-## Progress — Stage 3 en curso
+## Progress — Stage 3 completo
 
 ```
-✅ Skill creado (v0.1.0)
-⬜ Setup Next.js + shadcn/ui + Tailwind v4
-⬜ globals.css con CSS variables completas (dark/light)
-⬜ Layout del sitio de documentación (sidebar + content)
-⬜ Página home
-⬜ Sección Foundations (Colors · Typography · Spacing · Icons)
-⬜ Componentes (0/54 implementados)
+✅ Setup Next.js 16 + Base UI + Tailwind v4
+✅ globals.css con CSS variables completas (dark/light, OKLCH)
+✅ Layout del sitio de documentación (sidebar + topbar + content)
+✅ Página home (hero, stats, component showcase, foundations preview)
+✅ Foundations (Colors · Typography · Spacing · Icons · Elevation · Radius · Motion)
+✅ Componentes (68/68 implementados — ver lista completa en site-architecture.md)
+✅ Audit pass (focus rings, icon migration Lucide→Material, SelectItem radius/padding)
+✅ Deploy en Vercel (https://proteus-ds-web.vercel.app, 85 páginas estáticas)
 ```
 
 El detalle de implementación por componente (decisiones, bugs, validaciones) vive en
